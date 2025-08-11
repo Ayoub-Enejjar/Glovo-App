@@ -10,7 +10,7 @@ const Header = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <span className="text-sm text-gray-600">11:16</span>
+        <span className="text-sm text-gray-600"></span>
       </div>
       
       <div className="flex items-center space-x-3">
@@ -68,7 +68,7 @@ const RestaurantInfo = ({ restaurant }) => {
             
             {restaurant.isPrime && (
               <div className="bg-blue-800 px-2 py-1 rounded-full">
-                <span className="text-xs font-semibold">Prime ></span>
+                <span className="text-xs font-semibold">Prime </span>
               </div>
             )}
           </div>
