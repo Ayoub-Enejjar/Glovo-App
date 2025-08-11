@@ -1,5 +1,7 @@
 # 🚀 Glovo-App
+[Click here to view the live site!](https://glovo-app.netlify.app/)
 
+---
 A fullstack delivery management system built with React and Node.js, designed to streamline logistics and enhance user experience. This project includes modular architecture, dark mode support, multilingual capabilities, and Netlify deployment.
 
 ---
