@@ -6,12 +6,12 @@ A fullstack delivery management system built with React and Node.js, designed to
 
 ## 📁 Project Structure
 Glovo-App/ 
-├── backend/ # Node.js backend (API, database logic) 
-├── frontend/ # React frontend (UI, components) 
-│ ├── public/ 
-│ ├── src/ 
-│ ├── build/ # Generated after npm run build
-│ └── package.json
+        ├── backend/ # Node.js backend (API, database logic) 
+        ├── frontend/ # React frontend (UI, components) 
+                    │ ├── public/ 
+                    │ ├── src/ 
+                    │ ├── build/ # Generated after npm run build 
+                              │ └── package.json
 
 
 
