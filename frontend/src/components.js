@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 
 // Header Component
-export const Header = ({ onBack, onSearchToggle, showSearch }) => {
+export const Header = ({ onBack, onSearchToggle, showSearch, title = "Deliver to" }) => {
   return (
     <div className="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-100 sticky top-0 z-40">
       <div className="flex items-center space-x-3">
-        <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-          <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
+        {onBack && (
+          <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+        )}
         <div>
-          <span className="text-[10px] text-gray-400 block font-bold uppercase tracking-wider">Deliver to</span>
+          <span className="text-[10px] text-gray-400 block font-bold uppercase tracking-wider">{title}</span>
           <span className="text-xs font-bold text-gray-800 flex items-center">
             Maarif, Casablanca
             <svg className="w-3.5 h-3.5 ml-0.5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -22,11 +24,13 @@ export const Header = ({ onBack, onSearchToggle, showSearch }) => {
       </div>
       
       <div className="flex items-center space-x-2">
-        <button onClick={onSearchToggle} className={`p-2 rounded-full transition-all ${showSearch ? 'bg-red-50 text-red-500 scale-105' : 'hover:bg-gray-100 text-gray-600'}`}>
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </button>
+        {onSearchToggle && (
+          <button onClick={onSearchToggle} className={`p-2 rounded-full transition-all ${showSearch ? 'bg-red-50 text-red-500 scale-105' : 'hover:bg-gray-100 text-gray-600'}`}>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
+        )}
         <button className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-600">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.3} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -64,7 +68,9 @@ export const RestaurantInfo = ({ restaurant }) => {
             </div>
             
             <div className="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center shadow-md">
-              <span className="text-white font-black text-xl">M</span>
+              <span className="text-white font-black text-xl">
+                {restaurant.name.charAt(0)}
+              </span>
             </div>
           </div>
           
@@ -125,7 +131,7 @@ export const OffersCarousel = ({ offers }) => {
 // Category Tabs Component
 export const CategoryTabs = ({ categories, active, onChange }) => {
   return (
-    <div className="flex overflow-x-auto space-x-2 py-1 hide-scroll">
+    <div className="flex overflow-x-auto space-x-2 py-1 hide-scroll font-bold">
       {categories.map(cat => (
         <button
           key={cat}
@@ -140,7 +146,7 @@ export const CategoryTabs = ({ categories, active, onChange }) => {
 };
 
 // Search Bar Component
-export const SearchBar = ({ value, onChange, onClear }) => {
+export const SearchBar = ({ value, onChange, onClear, placeholder = "Search for food, drinks, desserts..." }) => {
   return (
     <div className="search-bar">
       <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,7 +156,7 @@ export const SearchBar = ({ value, onChange, onClear }) => {
         type="text" 
         value={value} 
         onChange={(e) => onChange(e.target.value)} 
-        placeholder="Search for food, drinks, desserts..."
+        placeholder={placeholder}
       />
       {value && (
         <button onClick={onClear} className="p-0.5 hover:bg-gray-150 rounded-full transition-colors">
@@ -503,7 +509,7 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm }) => {
                           : 'border-gray-100 bg-gray-50 text-gray-600 hover:border-gray-200'
                       }`}
                     >
-                      {method === 'Cash' ? '💵 Cash on Delivery' : '💳 Credit Card'}
+                      {method === 'Cash' ? '💵 Cash' : '💳 Card'}
                     </button>
                   );
                 })}
@@ -575,7 +581,7 @@ export const CartView = ({
                   <p className="text-[10px] text-gray-400 mt-0.5">Delivered from {restaurant.address}</p>
                 </div>
                 <div className="w-8 h-8 bg-yellow-400 rounded-xl flex items-center justify-center text-white font-bold text-sm">
-                  M
+                  {restaurant.name.charAt(0)}
                 </div>
               </div>
               
@@ -698,7 +704,7 @@ export const OrderConfirmation = ({ step, restaurant, onBack }) => {
           <div className="text-center space-y-1">
             <h1 className="text-xl font-black text-gray-900">Order Confirmed!</h1>
             <p className="text-xs text-gray-500 max-w-[240px] mx-auto leading-relaxed">
-              Your order from {restaurant.name} has been successfully placed.
+              Your order has been successfully placed.
             </p>
           </div>
           
@@ -749,7 +755,7 @@ export const OrderConfirmation = ({ step, restaurant, onBack }) => {
             
             <div className="text-center bg-white p-2.5 rounded-xl border border-gray-100/50">
               <span className="text-[10px] font-bold text-gray-400">Estimated Delivery Time</span>
-              <p className="font-black text-sm text-gray-900 mt-0.5">25 minutes</p>
+              <p className="font-black text-sm text-gray-900 mt-0.5">20-30 minutes</p>
             </div>
           </div>
         </div>
@@ -758,7 +764,464 @@ export const OrderConfirmation = ({ step, restaurant, onBack }) => {
           onClick={onBack}
           className="w-full bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-2xl font-bold transition-all shadow-lg text-center"
         >
-          Back to Restaurant
+          Back to Dashboard
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// Home Dashboard Component
+export const HomeDashboard = ({ 
+  restaurants, 
+  onSelectRestaurant, 
+  onCourierClick, 
+  onAnythingClick, 
+  onSupermarketClick, 
+  onPharmacyClick,
+  onSearchStore
+}) => {
+  const [searchVal, setSearchVal] = useState('');
+  
+  const filteredStores = restaurants.filter(r => 
+    r.name.toLowerCase().includes(searchVal.toLowerCase()) ||
+    r.address.toLowerCase().includes(searchVal.toLowerCase())
+  );
+
+  return (
+    <div className="pb-16 anim-fade-in">
+      {/* Search Header */}
+      <div className="px-4 pt-4 pb-3 bg-white space-y-3">
+        <SearchBar 
+          value={searchVal} 
+          onChange={(val) => { setSearchVal(val); onSearchStore(val); }} 
+          onClear={() => { setSearchVal(''); onSearchStore(''); }} 
+          placeholder="Search for restaurants or stores..." 
+        />
+      </div>
+
+      {/* Glovo Circular Navigation Grid */}
+      <div className="px-4 py-4 bg-white border-b border-gray-100">
+        <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-3">What can we bring you?</h3>
+        
+        <div className="grid grid-cols-3 gap-4">
+          {/* Food Bubble */}
+          <button 
+            onClick={() => onSelectRestaurant(restaurants[0])} // Default to McDonald's or show category
+            className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
+          >
+            <div className="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center text-2xl shadow-sm border border-amber-200/50 group-hover:scale-105 transition-transform">
+              🍔
+            </div>
+            <span className="text-[11px] font-bold text-gray-800">Food</span>
+          </button>
+          
+          {/* Courier Bubble */}
+          <button 
+            onClick={onCourierClick}
+            className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
+          >
+            <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center text-2xl shadow-sm border border-red-200/50 group-hover:scale-105 transition-transform">
+              📦
+            </div>
+            <span className="text-[11px] font-bold text-gray-800">Courier</span>
+          </button>
+          
+          {/* Anything Bubble */}
+          <button 
+            onClick={onAnythingClick}
+            className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
+          >
+            <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center text-2xl shadow-sm border border-indigo-200/50 group-hover:scale-105 transition-transform">
+              🍕
+            </div>
+            <span className="text-[11px] font-bold text-gray-800">Anything</span>
+          </button>
+
+          {/* Supermarket Bubble */}
+          <button 
+            onClick={onSupermarketClick}
+            className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
+          >
+            <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-2xl shadow-sm border border-emerald-200/50 group-hover:scale-105 transition-transform">
+              🛒
+            </div>
+            <span className="text-[11px] font-bold text-gray-800">Grocery</span>
+          </button>
+
+          {/* Pharmacy Bubble */}
+          <button 
+            onClick={onPharmacyClick}
+            className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
+          >
+            <div className="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center text-2xl shadow-sm border border-teal-200/50 group-hover:scale-105 transition-transform">
+              💊
+            </div>
+            <span className="text-[11px] font-bold text-gray-800">Pharmacy</span>
+          </button>
+
+          {/* Prime Bubble */}
+          <div 
+            className="flex flex-col items-center space-y-1.5 focus:outline-none group opacity-80 cursor-not-allowed"
+          >
+            <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-2xl shadow-sm border border-blue-200/50">
+              ⚡
+            </div>
+            <span className="text-[11px] font-bold text-gray-500">Prime Deals</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Featured Stores Section */}
+      <div className="px-4 py-4 space-y-3">
+        <div className="flex justify-between items-center">
+          <h3 className="text-xs font-black text-gray-800 uppercase tracking-wider">Popular Restaurants</h3>
+          <span className="text-[10px] text-red-500 font-bold">See all</span>
+        </div>
+
+        <div className="space-y-3">
+          {filteredStores.map(store => (
+            <div 
+              key={store.name}
+              onClick={() => onSelectRestaurant(store)}
+              className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex"
+            >
+              <div className="w-24 h-24 relative flex-shrink-0 bg-gray-100">
+                <img src={store.coverImage} alt={store.name} className="w-full h-full object-cover" />
+              </div>
+              <div className="p-3 flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-extrabold text-sm text-gray-900">{store.name}</h4>
+                    {store.isPrime && <span className="prime-badge py-0.5 px-1.5 text-[8px]">Prime</span>}
+                  </div>
+                  <p className="text-[10px] text-gray-400 mt-0.5">{store.address}</p>
+                </div>
+                
+                <div className="flex items-center justify-between text-[10px] font-bold text-gray-600 mt-2">
+                  <span className="flex items-center text-yellow-500">
+                    ★ {store.rating}%
+                  </span>
+                  <span>{store.deliveryTime} min</span>
+                  <span className="text-emerald-600">{store.deliveryFee.toFixed(2)} MAD fee</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Courier Form Component
+export const CourierForm = ({ onSubmit, onBack }) => {
+  const [pickup, setPickup] = useState('');
+  const [delivery, setDelivery] = useState('');
+  const [description, setDescription] = useState('');
+  const [size, setSize] = useState('Box'); // Envelope, Box, Large Box
+  const [error, setError] = useState('');
+
+  const pricing = {
+    'Envelope': 15.00,
+    'Box': 25.00,
+    'Large Box': 40.00
+  };
+
+  const handleOrder = () => {
+    if (!pickup || !delivery || !description) {
+      setError('Please fill in all fields.');
+      return;
+    }
+    setError('');
+    onSubmit({
+      pickup,
+      delivery,
+      description,
+      size,
+      price: pricing[size]
+    });
+  };
+
+  return (
+    <div className="anim-fade-in p-4 space-y-4 pb-20">
+      <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div className="flex items-center space-x-2">
+          <button onClick={onBack} className="p-1.5 hover:bg-gray-100 rounded-full">
+            <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <h2 className="text-base font-black text-gray-900">Courier Delivery</h2>
+        </div>
+        <span className="text-xl">📦</span>
+      </div>
+
+      <div className="space-y-3 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+        {error && <div className="text-xs text-red-500 font-bold">{error}</div>}
+
+        <div className="space-y-1">
+          <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Pickup Address</label>
+          <input 
+            type="text" 
+            placeholder="Where should we collect the package?"
+            value={pickup}
+            onChange={(e) => setPickup(e.target.value)}
+            className="input-field" 
+          />
+        </div>
+
+        <div className="space-y-1">
+          <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Delivery Address</label>
+          <input 
+            type="text" 
+            placeholder="Where should we deliver the package?"
+            value={delivery}
+            onChange={(e) => setDelivery(e.target.value)}
+            className="input-field" 
+          />
+        </div>
+
+        <div className="space-y-1">
+          <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Package Description</label>
+          <input 
+            type="text" 
+            placeholder="e.g. Office keys, Document, Charger..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="input-field" 
+          />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Package Size & Cost</label>
+        <div className="space-y-2">
+          {Object.entries(pricing).map(([k, v]) => {
+            const isActive = size === k;
+            return (
+              <button
+                key={k}
+                onClick={() => setSize(k)}
+                className={`w-full flex items-center justify-between p-3 rounded-xl border text-[11px] font-bold transition-all ${
+                  isActive 
+                    ? 'border-red-500 bg-red-50/30 text-red-750' 
+                    : 'border-gray-100 bg-white text-gray-600 hover:border-gray-200'
+                }`}
+              >
+                <div className="flex items-center space-x-2">
+                  <span>{k === 'Envelope' ? '✉️' : k === 'Box' ? '📦' : '🚚'}</span>
+                  <span>{k}</span>
+                </div>
+                <span>{v.toFixed(2)} MAD</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <button 
+        onClick={handleOrder}
+        className="w-full bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-2xl font-bold transition-all shadow-lg text-center mt-4"
+      >
+        Order Courier • {pricing[size].toFixed(2)} MAD
+      </button>
+    </div>
+  );
+};
+
+// Anything Form Component
+export const AnythingForm = ({ onSubmit, onBack }) => {
+  const [request, setRequest] = useState('');
+  const [error, setError] = useState('');
+
+  const price = 30.00; // Fixed delivery for anything
+
+  const handleOrder = () => {
+    if (!request.trim()) {
+      setError('Please specify what we should buy.');
+      return;
+    }
+    setError('');
+    onSubmit({
+      description: request,
+      price
+    });
+  };
+
+  return (
+    <div className="anim-fade-in p-4 space-y-4 pb-20">
+      <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div className="flex items-center space-x-2">
+          <button onClick={onBack} className="p-1.5 hover:bg-gray-100 rounded-full">
+            <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <h2 className="text-base font-black text-gray-900">Order Anything</h2>
+        </div>
+        <span className="text-xl">🍕</span>
+      </div>
+
+      <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm space-y-3">
+        <p className="text-[11px] text-gray-400 leading-relaxed font-bold">
+          Write down what you need, and we'll go buy it and deliver it to your doorstep. (e.g., "A pack of yellow post-it notes from library, or coffee grounds from local shop")
+        </p>
+
+        {error && <div className="text-xs text-red-500 font-bold">{error}</div>}
+
+        <textarea 
+          rows={4}
+          placeholder="Describe what you want us to buy..."
+          value={request}
+          onChange={(e) => setRequest(e.target.value)}
+          className="input-field w-full p-3 text-xs"
+        />
+      </div>
+
+      <div className="bg-emerald-50 border border-emerald-100 p-3 rounded-xl flex justify-between items-center text-xs text-emerald-800 font-bold">
+        <span>Delivery service fee</span>
+        <span>{price.toFixed(2)} MAD</span>
+      </div>
+
+      <button 
+        onClick={handleOrder}
+        className="w-full bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-2xl font-bold transition-all shadow-lg text-center mt-4"
+      >
+        Request Delivery
+      </button>
+    </div>
+  );
+};
+
+// Orders History Component
+export const OrdersHistory = ({ orders = [], onReorder }) => {
+  const mockOrders = [
+    { id: '1029', storeName: 'Burger King', itemsCount: 3, date: 'July 11, 2026', total: 108.00, status: 'Delivered', type: 'Food' },
+    { id: '0981', storeName: "McDonald's", itemsCount: 2, date: 'July 08, 2026', total: 95.00, status: 'Delivered', type: 'Food' },
+    { id: '0877', storeName: 'Courier Delivery', itemsCount: 1, date: 'July 02, 2026', total: 25.00, status: 'Delivered', type: 'Courier' }
+  ];
+
+  const displayOrders = orders.length > 0 ? orders : mockOrders;
+
+  return (
+    <div className="anim-fade-in p-4 space-y-4 pb-20">
+      <h2 className="text-base font-black text-gray-900 border-b border-gray-100 pb-3">Your Orders</h2>
+
+      {displayOrders.map(order => (
+        <div 
+          key={order.id}
+          className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm space-y-3"
+        >
+          <div className="flex justify-between items-start">
+            <div>
+              <h4 className="font-extrabold text-sm text-gray-900">{order.storeName}</h4>
+              <p className="text-[10px] text-gray-400 mt-0.5">Order ID: #{order.id} • {order.date}</p>
+            </div>
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+              order.status === 'Delivered' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'
+            }`}>
+              {order.status}
+            </span>
+          </div>
+
+          <div className="flex justify-between items-center text-xs pt-1">
+            <span className="font-bold text-gray-700">{order.itemsCount} items • {order.total.toFixed(2)} MAD</span>
+            {order.type === 'Food' && (
+              <button 
+                onClick={() => onReorder(order.storeName)}
+                className="bg-red-50 hover:bg-red-100 text-red-500 font-bold px-3 py-1 rounded-lg text-[10px]"
+              >
+                Reorder
+              </button>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// Profile Screen Component
+export const ProfileScreen = ({ onLogout }) => {
+  return (
+    <div className="anim-fade-in p-4 space-y-5 pb-20">
+      <h2 className="text-base font-black text-gray-900 border-b border-gray-100 pb-3">My Profile</h2>
+
+      {/* Profile Header */}
+      <div className="bg-gradient-to-r from-red-500 to-red-600 p-5 rounded-3xl text-white flex items-center space-x-4 shadow-md">
+        <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-2xl font-black border border-white/30">
+          A
+        </div>
+        <div>
+          <h3 className="font-extrabold text-base leading-tight">Ayoub Enejjar</h3>
+          <p className="text-[10px] text-white/80 font-bold mt-0.5">Premium Glovo Member</p>
+        </div>
+      </div>
+
+      {/* prime tag */}
+      <div className="bg-blue-50 border border-blue-100 p-4 rounded-2xl flex justify-between items-center">
+        <div>
+          <h4 className="font-black text-xs text-blue-900 flex items-center">
+            ⚡ Glovo Prime active
+          </h4>
+          <p className="text-[9px] text-blue-600 font-bold mt-0.5">Free delivery on restaurant orders above 100 MAD</p>
+        </div>
+        <span className="text-xs bg-blue-500 text-white font-bold py-1 px-2.5 rounded-lg">Managed</span>
+      </div>
+
+      {/* Account Settings */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm divide-y divide-gray-100">
+        <div className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50">
+          <span>💳 Saved Payment Methods</span>
+          <span className="text-gray-400">➔</span>
+        </div>
+        <div className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50">
+          <span>📍 Saved Delivery Addresses</span>
+          <span className="text-gray-400">➔</span>
+        </div>
+        <div className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50">
+          <span>🔔 Notification Preferences</span>
+          <span className="text-gray-400">➔</span>
+        </div>
+        <div className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50">
+          <span>🌍 Language Settings</span>
+          <span className="text-gray-300">English ➔</span>
+        </div>
+      </div>
+
+      {/* logout */}
+      <button 
+        onClick={onLogout}
+        className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-2xl font-bold transition-all text-center text-xs"
+      >
+        Sign Out
+      </button>
+    </div>
+  );
+};
+
+// Coming Soon Modal Component
+export const ComingSoonModal = ({ category, onClose }) => {
+  return (
+    <div className="modal-backdrop" onClick={onClose} style={{ zIndex: 100 }}>
+      <div 
+        className="bg-white w-full max-w-[430px] rounded-t-3xl overflow-hidden anim-slide-up p-6 text-center space-y-5"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="text-5xl">🚧</div>
+        <div className="space-y-1.5">
+          <h2 className="text-lg font-black text-gray-900">{category} is Coming Soon!</h2>
+          <p className="text-xs text-gray-500 max-w-[280px] mx-auto leading-relaxed">
+            We are working hard to expand our retail network and bring grocery partners to Maarif, Casablanca.
+          </p>
+        </div>
+        
+        <button 
+          onClick={onClose}
+          className="w-full bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-2xl font-bold transition-all"
+        >
+          Got it
         </button>
       </div>
     </div>
@@ -778,7 +1241,13 @@ const Components = {
   BottomNav,
   CartView,
   CheckoutModal,
-  OrderConfirmation
+  OrderConfirmation,
+  HomeDashboard,
+  CourierForm,
+  AnythingForm,
+  OrdersHistory,
+  ProfileScreen,
+  ComingSoonModal
 };
 
 export default Components;
