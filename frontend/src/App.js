@@ -44,7 +44,7 @@ export const menuData = {
       items: [
         { id: 11, name: "Whopper® Sandwich", description: "Flame-grilled beef patty with juicy tomatoes, fresh lettuce, creamy mayo, ketchup, pickles, and sliced white onions on a toasted sesame seed bun", price: 65.00, image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80", ordersCount: "8k+", category: "Burgers", isPopular: true, calories: 660 },
         { id: 12, name: "Chicken Royale", description: "Crispy chicken breast patty, shredded lettuce, and creamy mayonnaise on a toasted sesame seed bun", price: 59.00, image: "https://images.pexels.com/photos/4021944/pexels-photo-4021944.jpeg?w=400", ordersCount: "4k+", category: "Burgers", isPopular: false, calories: 570 },
-        { id: 13, name: "Onion Rings 9pc", description: "Hot, crispy golden onion rings perfectly seasoned", price: 20.00, image: "https://images.unsplash.com/photo-1639024471283-2da7b3c6a267?w=400&q=80", ordersCount: "6k+", category: "Sides", isPopular: true, calories: 320 },
+        { id: 13, name: "Onion Rings 9pc", description: "Hot, crispy golden onion rings perfectly seasoned", price: 20.00, image: "https://th.bing.com/th/id/OIP.tt332pYe6trsmCdyZwiJ6AHaHa?w=158&h=180&c=7&r=0&o=7&pid=1.7&rm=3", ordersCount: "6k+", category: "Sides", isPopular: true, calories: 320 },
         { id: 14, name: "Hershey's Chocolate Sundae", description: "Creamy vanilla soft serve topped with rich chocolate fudge sauce", price: 28.00, image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&q=80", ordersCount: "2k+", category: "Desserts", isPopular: false, calories: 290 }
       ]
     },
@@ -326,7 +326,7 @@ function App() {
     const localCart = localStorage.getItem('glovo_cart');
     return localCart ? JSON.parse(localCart) : [];
   });
-  
+
   const [selectedRestaurant, setSelectedRestaurant] = useState(() => {
     const localStore = localStorage.getItem('glovo_active_restaurant');
     return localStore ? JSON.parse(localStore) : menuData.restaurants[0];
@@ -345,7 +345,7 @@ function App() {
   const [orderStep, setOrderStep] = useState(0);
   const [showSearch, setShowSearch] = useState(false);
   const [comingSoonCategory, setComingSoonCategory] = useState('');
-  
+
   // Location State
   const [location, setLocation] = useState(() => {
     return localStorage.getItem('glovo_user_location') || 'Maarif, Casablanca';
@@ -464,9 +464,9 @@ function App() {
     setSearchQuery('');
   };
 
-  const handleAddToCart = (item) => { 
-    setSelectedItem(item); 
-    setShowModal(true); 
+  const handleAddToCart = (item) => {
+    setSelectedItem(item);
+    setShowModal(true);
   };
 
   const confirmAdd = (item, qty) => {
@@ -564,24 +564,24 @@ function App() {
     }
   };
 
-  const goHome = () => { 
-    setCurrentView('home'); 
-    setActiveNav('home'); 
-    setOrderStep(0); 
+  const goHome = () => {
+    setCurrentView('home');
+    setActiveNav('home');
+    setOrderStep(0);
   };
 
   const renderActiveView = () => {
     switch (currentView) {
       case 'home':
         return (
-          <HomeDashboard 
+          <HomeDashboard
             restaurants={menuData.restaurants}
             onSelectRestaurant={handleSelectRestaurant}
             onCourierClick={() => setCurrentView('courier')}
             onAnythingClick={() => setCurrentView('anything')}
             onSupermarketClick={() => setComingSoonCategory('Grocery')}
             onPharmacyClick={() => setComingSoonCategory('Pharmacy')}
-            onSearchStore={(val) => {}}
+            onSearchStore={(val) => { }}
             t={t}
           />
         );
@@ -593,9 +593,9 @@ function App() {
         return <OrdersHistory orders={ordersHistory} onReorder={handleReorder} t={t} />;
       case 'profile':
         return (
-          <ProfileScreen 
-            onLogout={handleLogout} 
-            onManageAddresses={() => setShowLocationModal(true)} 
+          <ProfileScreen
+            onLogout={handleLogout}
+            onManageAddresses={() => setShowLocationModal(true)}
             onManagePayments={() => setShowPaymentsModal(true)}
             onManageNotifications={() => setShowNotificationsModal(true)}
             onManageLanguage={() => setShowLanguageModal(true)}
@@ -683,13 +683,13 @@ function App() {
   return (
     <div className="App" style={{ background: 'var(--bg)', minHeight: '100vh' }}>
       <div style={{ maxWidth: 430, margin: '0 auto', background: 'var(--surface)', minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
-        
+
         {/* Render header on dashboard and restaurant view */}
         {(currentView === 'home' || currentView === 'restaurant') && (
-          <Header 
-            onBack={currentView === 'restaurant' ? goHome : null} 
-            onSearchToggle={currentView === 'restaurant' ? () => setShowSearch(p => !p) : null} 
-            showSearch={showSearch} 
+          <Header
+            onBack={currentView === 'restaurant' ? goHome : null}
+            onSearchToggle={currentView === 'restaurant' ? () => setShowSearch(p => !p) : null}
+            showSearch={showSearch}
             title={currentView === 'restaurant' ? "Store Menu" : t.deliverTo || "Deliver to"}
             location={location}
             onLocationClick={() => setShowLocationModal(true)}
@@ -730,7 +730,7 @@ function App() {
 
         {/* Location Selection Modal */}
         {showLocationModal && (
-          <LocationModal 
+          <LocationModal
             currentLocation={location}
             onSelectLocation={setLocation}
             onClose={() => setShowLocationModal(false)}
