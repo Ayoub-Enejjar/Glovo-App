@@ -12,8 +12,8 @@ export const Header = ({ onBack, onSearchToggle, showSearch, title = "Deliver to
             </svg>
           </button>
         )}
-        <div 
-          onClick={onLocationClick} 
+        <div
+          onClick={onLocationClick}
           className={`flex flex-col ${onLocationClick ? 'cursor-pointer select-none hover:opacity-80 transition-opacity' : ''}`}
         >
           <span className="text-[10px] text-gray-400 block font-bold uppercase tracking-wider">{title}</span>
@@ -27,7 +27,7 @@ export const Header = ({ onBack, onSearchToggle, showSearch, title = "Deliver to
           </span>
         </div>
       </div>
-      
+
       <div className="flex items-center space-x-2">
         {onSearchToggle && (
           <button onClick={onSearchToggle} className={`p-2 rounded-full transition-all ${showSearch ? 'bg-red-50 text-red-500 scale-105' : 'hover:bg-gray-100 text-gray-600'}`}>
@@ -52,14 +52,14 @@ export const RestaurantInfo = ({ restaurant }) => {
     <div className="relative">
       {/* Cover Image */}
       <div className="h-40 w-full overflow-hidden relative">
-        <img 
-          src={restaurant.coverImage} 
-          alt={restaurant.name} 
+        <img
+          src={restaurant.coverImage}
+          alt={restaurant.name}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
       </div>
-      
+
       {/* Info Card */}
       <div className="px-4 -mt-12 relative z-10">
         <div className="bg-white rounded-2xl p-4 shadow-md border border-gray-100">
@@ -71,16 +71,16 @@ export const RestaurantInfo = ({ restaurant }) => {
               </div>
               <p className="text-xs text-gray-400 mt-0.5">{restaurant.address}</p>
             </div>
-            
+
             <div className="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center shadow-md">
               <span className="text-white font-black text-xl">
                 {restaurant.name.charAt(0)}
               </span>
             </div>
           </div>
-          
+
           <hr className="my-3 border-gray-100" />
-          
+
           <div className="flex items-center justify-between text-xs">
             <div className="flex items-center space-x-1 font-bold text-gray-800">
               <svg className="w-4 h-4 text-yellow-400 fill-yellow-400" viewBox="0 0 20 20">
@@ -89,14 +89,14 @@ export const RestaurantInfo = ({ restaurant }) => {
               <span>{restaurant.rating}%</span>
               <span className="text-[10px] text-gray-400 font-normal">({restaurant.reviewCount})</span>
             </div>
-            
+
             <div className="flex items-center space-x-1 font-bold text-gray-800">
               <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>{restaurant.deliveryTime} min</span>
             </div>
-            
+
             <div className="flex items-center space-x-1 font-bold text-gray-800">
               <svg className="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
@@ -115,7 +115,7 @@ export const OffersCarousel = ({ offers }) => {
   return (
     <div className="flex overflow-x-auto space-x-3 pb-1 hide-scroll">
       {offers.map(offer => (
-        <div 
+        <div
           key={offer.id}
           className="offer-card text-white flex flex-col justify-between"
           style={{ background: offer.bg }}
@@ -157,10 +157,10 @@ export const SearchBar = ({ value, onChange, onClear, placeholder = "Search for 
       <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
       </svg>
-      <input 
-        type="text" 
-        value={value} 
-        onChange={(e) => onChange(e.target.value)} 
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
       />
       {value && (
@@ -186,24 +186,24 @@ export const MenuItem = ({ item, onAddToCart, cartItem, onUpdateQty }) => {
           </div>
           <p className="text-gray-500 text-[11px] line-clamp-2 leading-relaxed mb-2">{item.description}</p>
         </div>
-        
+
         <div className="flex items-end justify-between">
           <div className="flex flex-col">
             <span className="font-black text-base text-gray-900">{item.price.toFixed(2)} MAD</span>
             <span className="text-[9px] text-gray-400 font-bold">{item.calories} kcal • {item.ordersCount} ordered</span>
           </div>
-          
+
           <div>
             {cartItem ? (
               <div className="flex items-center space-x-2 bg-red-500 text-white rounded-full p-0.5 shadow-md">
-                <button 
+                <button
                   onClick={() => onUpdateQty(item.id, cartItem.quantity - 1)}
                   className="qty-btn bg-white/20 hover:bg-white/30 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs"
                 >
                   -
                 </button>
                 <span className="font-black text-xs min-w-[12px] text-center">{cartItem.quantity}</span>
-                <button 
+                <button
                   onClick={() => onUpdateQty(item.id, cartItem.quantity + 1)}
                   className="qty-btn bg-white/20 hover:bg-white/30 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs"
                 >
@@ -211,7 +211,7 @@ export const MenuItem = ({ item, onAddToCart, cartItem, onUpdateQty }) => {
                 </button>
               </div>
             ) : (
-              <button 
+              <button
                 onClick={() => onAddToCart(item)}
                 className="w-8 h-8 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full flex items-center justify-center transition-colors shadow-md btn-spring"
               >
@@ -223,11 +223,11 @@ export const MenuItem = ({ item, onAddToCart, cartItem, onUpdateQty }) => {
           </div>
         </div>
       </div>
-      
+
       <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-gray-50 border border-gray-100">
-        <img 
-          src={item.image} 
-          alt={item.name} 
+        <img
+          src={item.image}
+          alt={item.name}
           className="w-full h-full object-cover"
         />
       </div>
@@ -239,7 +239,7 @@ export const MenuItem = ({ item, onAddToCart, cartItem, onUpdateQty }) => {
 export const DeliveryProgress = ({ total, min, extraFee, currency }) => {
   const percentage = Math.min(100, (total / min) * 100);
   const remaining = min - total;
-  
+
   return (
     <div className="bg-amber-50 border border-amber-100 rounded-xl p-3 mx-4 my-2">
       {total >= min ? (
@@ -256,7 +256,7 @@ export const DeliveryProgress = ({ total, min, extraFee, currency }) => {
             <span>{percentage.toFixed(0)}%</span>
           </div>
           <div className="w-full bg-amber-200/50 rounded-full h-2 overflow-hidden">
-            <div 
+            <div
               className="delivery-bar-fill h-full bg-emerald-500 rounded-full transition-all duration-500"
               style={{ width: `${percentage}%` }}
             ></div>
@@ -274,7 +274,7 @@ export const DeliveryProgress = ({ total, min, extraFee, currency }) => {
 export const CartButton = ({ count, total, currency, onClick }) => {
   return (
     <div className="fixed bottom-16 left-0 right-0 px-4 z-30">
-      <button 
+      <button
         onClick={onClick}
         className="w-full max-w-[398px] mx-auto cart-float-btn text-white py-3.5 px-5 rounded-2xl font-black flex items-center justify-between shadow-lg"
       >
@@ -305,7 +305,7 @@ export const AddToCartModal = ({ item, onConfirm, onClose, currency }) => {
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div 
+      <div
         className="bg-white w-full max-w-[430px] rounded-t-3xl overflow-hidden anim-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
@@ -318,13 +318,13 @@ export const AddToCartModal = ({ item, onConfirm, onClose, currency }) => {
             </svg>
           </button>
         </div>
-        
+
         <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
           <div>
             <h2 className="text-lg font-black text-gray-900">{item.name}</h2>
             <p className="text-gray-500 text-[11px] mt-0.5 leading-relaxed">{item.description}</p>
           </div>
-          
+
           {/* Size selection */}
           <div className="space-y-1.5">
             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Choose size</label>
@@ -336,11 +336,10 @@ export const AddToCartModal = ({ item, onConfirm, onClose, currency }) => {
                   <button
                     key={optSize}
                     onClick={() => setSize(optSize)}
-                    className={`flex-1 py-2 px-3 rounded-xl border-2 text-[11px] font-bold transition-all ${
-                      isActive 
-                        ? 'border-red-500 bg-red-50/50 text-red-600' 
+                    className={`flex-1 py-2 px-3 rounded-xl border-2 text-[11px] font-bold transition-all ${isActive
+                        ? 'border-red-500 bg-red-50/50 text-red-600'
                         : 'border-gray-100 bg-gray-50 text-gray-600 hover:border-gray-200'
-                    }`}
+                      }`}
                   >
                     {opt}
                   </button>
@@ -348,7 +347,7 @@ export const AddToCartModal = ({ item, onConfirm, onClose, currency }) => {
               })}
             </div>
           </div>
-          
+
           {/* Extras */}
           <div className="space-y-1.5">
             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Add extras (+5.00 MAD each)</label>
@@ -359,16 +358,14 @@ export const AddToCartModal = ({ item, onConfirm, onClose, currency }) => {
                   <button
                     key={extra}
                     onClick={() => toggleExtra(extra)}
-                    className={`w-full flex items-center justify-between p-2.5 rounded-xl border text-[11px] font-bold transition-all ${
-                      hasExtra 
-                        ? 'border-emerald-500 bg-emerald-50/30 text-emerald-700' 
+                    className={`w-full flex items-center justify-between p-2.5 rounded-xl border text-[11px] font-bold transition-all ${hasExtra
+                        ? 'border-emerald-500 bg-emerald-50/30 text-emerald-700'
                         : 'border-gray-100 bg-gray-50/50 text-gray-600 hover:border-gray-200'
-                    }`}
+                      }`}
                   >
                     <span>{extra}</span>
-                    <span className={`w-4 h-4 rounded-full flex items-center justify-center border ${
-                      hasExtra ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-gray-300'
-                    }`}>
+                    <span className={`w-4 h-4 rounded-full flex items-center justify-center border ${hasExtra ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-gray-300'
+                      }`}>
                       {hasExtra && (
                         <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M5 13l4 4L19 7" />
@@ -380,19 +377,19 @@ export const AddToCartModal = ({ item, onConfirm, onClose, currency }) => {
               })}
             </div>
           </div>
-          
+
           {/* Quantity and confirm */}
           <div className="flex items-center justify-between pt-1">
             <span className="text-xs font-bold text-gray-800">Quantity</span>
             <div className="flex items-center space-x-3 bg-gray-100 rounded-full px-2.5 py-1">
-              <button 
+              <button
                 onClick={() => setQuantity(q => Math.max(1, q - 1))}
                 className="w-7 h-7 rounded-full bg-white flex items-center justify-center text-gray-800 font-bold shadow-sm"
               >
                 -
               </button>
               <span className="font-black text-sm min-w-[16px] text-center">{quantity}</span>
-              <button 
+              <button
                 onClick={() => setQuantity(q => q + 1)}
                 className="w-7 h-7 rounded-full bg-white flex items-center justify-center text-gray-800 font-bold shadow-sm"
               >
@@ -400,8 +397,8 @@ export const AddToCartModal = ({ item, onConfirm, onClose, currency }) => {
               </button>
             </div>
           </div>
-          
-          <button 
+
+          <button
             onClick={() => onConfirm(item, quantity)}
             className="w-full bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-2xl font-bold transition-all shadow-lg flex justify-center items-center space-x-1.5"
           >
@@ -426,14 +423,14 @@ export const BottomNav = ({ active, onChange, cartCount }) => {
           </svg>
           <span>Home</span>
         </button>
-        
+
         <button onClick={() => onChange('orders')} className={`nav-item ${active === 'orders' ? 'active' : ''}`}>
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
           </svg>
           <span>Orders</span>
         </button>
-        
+
         <button onClick={() => onChange('cart')} className={`nav-item ${active === 'cart' ? 'active' : ''} relative`}>
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -441,7 +438,7 @@ export const BottomNav = ({ active, onChange, cartCount }) => {
           {cartCount > 0 && <span className="badge">{cartCount}</span>}
           <span>Basket</span>
         </button>
-        
+
         <button onClick={() => onChange('profile')} className={`nav-item ${active === 'profile' ? 'active' : ''}`}>
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -461,7 +458,7 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
 
   return (
     <div className="modal-backdrop" onClick={onClose} style={{ zIndex: 100 }}>
-      <div 
+      <div
         className="bg-white w-full max-w-[430px] rounded-t-3xl overflow-hidden anim-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
@@ -474,30 +471,30 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
               </svg>
             </button>
           </div>
-          
+
           <div className="space-y-4">
             {/* Delivery address */}
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Delivery Address</label>
-              <input 
-                type="text" 
-                value={address} 
+              <input
+                type="text"
+                value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="input-field" 
+                className="input-field"
               />
             </div>
-            
+
             {/* Phone */}
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Phone Number</label>
-              <input 
-                type="text" 
-                value={phone} 
+              <input
+                type="text"
+                value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="input-field" 
+                className="input-field"
               />
             </div>
-            
+
             {/* Payment Method */}
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Payment Method</label>
@@ -508,22 +505,21 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
                     <button
                       key={method}
                       onClick={() => setPayment(method)}
-                      className={`flex-1 py-2.5 px-3 rounded-xl border-2 text-[11px] font-bold transition-all flex items-center justify-center space-x-1.5 ${
-                        isActive 
-                          ? 'border-red-500 bg-red-50/50 text-red-600' 
+                      className={`flex-1 py-2.5 px-3 rounded-xl border-2 text-[11px] font-bold transition-all flex items-center justify-center space-x-1.5 ${isActive
+                          ? 'border-red-500 bg-red-50/50 text-red-600'
                           : 'border-gray-100 bg-gray-50 text-gray-600 hover:border-gray-200'
-                      }`}
+                        }`}
                     >
                       {method === 'Cash' ? (
                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          <rect x="2" y="6" width="20" height="12" rx="2"/>
-                          <circle cx="12" cy="12" r="3"/>
-                          <path d="M6 12h.01M18 12h.01"/>
+                          <rect x="2" y="6" width="20" height="12" rx="2" />
+                          <circle cx="12" cy="12" r="3" />
+                          <path d="M6 12h.01M18 12h.01" />
                         </svg>
                       ) : (
                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          <rect x="2" y="5" width="20" height="14" rx="2"/>
-                          <line x1="2" y1="10" x2="22" y2="10"/>
+                          <rect x="2" y="5" width="20" height="14" rx="2" />
+                          <line x1="2" y1="10" x2="22" y2="10" />
                         </svg>
                       )}
                       <span>{method}</span>
@@ -533,13 +529,13 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
               </div>
             </div>
           </div>
-          
+
           <div className="bg-gray-50 p-3.5 rounded-2xl flex justify-between items-center border border-gray-100">
             <span className="font-bold text-xs text-gray-800">Total Price</span>
             <span className="font-black text-base text-gray-900">{total.toFixed(2)} {currency}</span>
           </div>
-          
-          <button 
+
+          <button
             onClick={onConfirm}
             className="w-full bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-2xl font-bold transition-all shadow-lg text-center"
           >
@@ -552,8 +548,8 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
 };
 
 // Cart View Component
-export const CartView = ({ 
-  cart, total, count, restaurant, onUpdateQty, onBack, 
+export const CartView = ({
+  cart, total, count, restaurant, onUpdateQty, onBack,
   onCheckout, showCheckout, onConfirmOrder, onCloseCheckout,
   defaultAddress
 }) => {
@@ -565,7 +561,7 @@ export const CartView = ({
   return (
     <div className="App bg-gray-50 min-h-screen">
       <div className="max-w-[430px] mx-auto bg-white min-h-screen flex flex-col justify-between pb-8">
-        
+
         {/* Header */}
         <div className="px-4 py-3 flex items-center border-b border-gray-100 sticky top-0 bg-white z-20">
           <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full transition-colors mr-2">
@@ -575,21 +571,21 @@ export const CartView = ({
           </button>
           <h1 className="text-lg font-black text-gray-900">Your Basket</h1>
         </div>
-        
+
         {/* Main Content */}
         <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
           {cart.length === 0 ? (
             <div className="text-center py-20 space-y-4">
               <div className="w-16 h-16 mx-auto bg-gray-50 rounded-full flex items-center justify-center border border-gray-100/50 shadow-inner">
                 <svg className="w-8 h-8 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z"/>
-                  <line x1="3" y1="6" x2="21" y2="6"/>
-                  <path d="M16 10a4 4 0 0 1-8 0"/>
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z" />
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <path d="M16 10a4 4 0 0 1-8 0" />
                 </svg>
               </div>
               <h2 className="text-base font-extrabold text-gray-900">Your basket is empty</h2>
               <p className="text-xs text-gray-500">Go back to add delicious meals to your basket!</p>
-              <button 
+              <button
                 onClick={onBack}
                 className="bg-red-500 hover:bg-red-600 text-white font-bold px-6 py-2.5 rounded-xl transition-all shadow-md btn-spring"
               >
@@ -608,7 +604,7 @@ export const CartView = ({
                   {restaurant.name.charAt(0)}
                 </div>
               </div>
-              
+
               {/* Item List */}
               <div className="space-y-2">
                 <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Items</h3>
@@ -622,16 +618,16 @@ export const CartView = ({
                           <span className="text-[10px] text-gray-400">{item.price.toFixed(2)} MAD</span>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center space-x-2">
-                        <button 
+                        <button
                           onClick={() => onUpdateQty(item.id, item.quantity - 1)}
                           className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 font-bold hover:bg-gray-200 text-xs"
                         >
                           -
                         </button>
                         <span className="font-bold text-xs w-4 text-center">{item.quantity}</span>
-                        <button 
+                        <button
                           onClick={() => onUpdateQty(item.id, item.quantity + 1)}
                           className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 font-bold hover:bg-gray-200 text-xs"
                         >
@@ -642,23 +638,23 @@ export const CartView = ({
                   ))}
                 </div>
               </div>
-              
+
               {/* Small Order Fee Warning */}
               {isBelowMin && (
                 <div className="bg-amber-50 border border-amber-100 rounded-2xl p-3 flex items-start space-x-2.5">
                   <svg className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                    <line x1="12" y1="9" x2="12" y2="13"/>
-                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
                   </svg>
                   <div className="text-[10px] text-amber-800 leading-relaxed font-bold">
                     <p className="font-extrabold mb-0.5">Small Order Fee Applied</p>
-                    Your order subtotal is below the {restaurant.minOrder.toFixed(2)} MAD minimum. 
+                    Your order subtotal is below the {restaurant.minOrder.toFixed(2)} MAD minimum.
                     Add {(restaurant.minOrder - total).toFixed(2)} MAD to avoid the extra {restaurant.extraFee.toFixed(2)} MAD fee.
                   </div>
                 </div>
               )}
-              
+
               {/* Summary breakdown */}
               <div className="bg-gray-50/50 rounded-2xl p-3.5 border border-gray-100 space-y-2">
                 <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Receipt Details</h3>
@@ -687,11 +683,11 @@ export const CartView = ({
             </>
           )}
         </div>
-        
+
         {/* Footer actions */}
         {cart.length > 0 && (
           <div className="px-4 pt-3 border-t border-gray-100 sticky bottom-0 bg-white z-20">
-            <button 
+            <button
               onClick={onCheckout}
               className="w-full bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-2xl font-bold transition-all shadow-lg flex justify-between px-5 text-sm"
             >
@@ -700,14 +696,14 @@ export const CartView = ({
             </button>
           </div>
         )}
-        
+
         {/* Checkout Modal */}
         {showCheckout && (
-          <CheckoutModal 
-            onClose={onCloseCheckout} 
-            total={grandTotal} 
-            currency={restaurant.currency} 
-            onConfirm={onConfirmOrder} 
+          <CheckoutModal
+            onClose={onCloseCheckout}
+            total={grandTotal}
+            currency={restaurant.currency}
+            onConfirm={onConfirmOrder}
             defaultAddress={defaultAddress}
           />
         )}
@@ -721,7 +717,7 @@ export const OrderConfirmation = ({ step, restaurant, onBack }) => {
   return (
     <div className="App bg-gray-50 min-h-screen">
       <div className="max-w-[430px] mx-auto bg-white min-h-screen flex flex-col justify-between p-5 pb-8">
-        
+
         <div className="flex-1 flex flex-col items-center justify-center space-y-6 my-auto">
           {/* Animated Success checkmark */}
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center check-circle shadow-inner">
@@ -729,22 +725,22 @@ export const OrderConfirmation = ({ step, restaurant, onBack }) => {
               <path className="check-path" strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          
+
           <div className="text-center space-y-1">
             <h1 className="text-xl font-black text-gray-900">Order Confirmed!</h1>
             <p className="text-xs text-gray-500 max-w-[240px] mx-auto leading-relaxed">
               Your order has been successfully placed.
             </p>
           </div>
-          
+
           {/* Delivery Tracker Steps */}
           <div className="w-full bg-gray-50 rounded-2xl p-4 border border-gray-100 shadow-sm space-y-4">
             <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider text-center">Live Delivery Tracker</h3>
-            
+
             <div className="flex justify-between items-center relative px-1">
               {[
-                { 
-                  name: 'Sent', 
+                {
+                  name: 'Sent',
                   icon: (
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -752,22 +748,22 @@ export const OrderConfirmation = ({ step, restaurant, onBack }) => {
                       <line x1="16" y1="13" x2="8" y2="13" />
                       <line x1="16" y1="17" x2="8" y2="17" />
                     </svg>
-                  ), 
-                  s: 1 
+                  ),
+                  s: 1
                 },
-                { 
-                  name: 'Cooking', 
+                {
+                  name: 'Cooking',
                   icon: (
                     <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 2v4M17 2v4M7 2v4" />
                       <path d="M4 10h16v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-8z" />
                       <line x1="2" y1="10" x2="22" y2="10" />
                     </svg>
-                  ), 
-                  s: 2 
+                  ),
+                  s: 2
                 },
-                { 
-                  name: 'Road', 
+                {
+                  name: 'Road',
                   icon: (
                     <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="5.5" cy="18.5" r="2.5" />
@@ -775,31 +771,30 @@ export const OrderConfirmation = ({ step, restaurant, onBack }) => {
                       <path d="M9.5 17.5L12 9H17L15 15.5H9.5z" />
                       <path d="M12 9L15 4h3" />
                     </svg>
-                  ), 
-                  s: 3 
+                  ),
+                  s: 3
                 },
-                { 
-                  name: 'Arrived', 
+                {
+                  name: 'Arrived',
                   icon: (
                     <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                       <polyline points="9 22 9 12 15 12 15 22" />
                     </svg>
-                  ), 
-                  s: 4 
+                  ),
+                  s: 4
                 }
               ].map((item, idx, arr) => {
                 const active = step >= item.s;
                 const current = step === item.s;
-                
+
                 return (
                   <React.Fragment key={item.name}>
                     <div className="flex flex-col items-center space-y-1 relative z-10">
-                      <div className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-500 ${
-                        active 
-                          ? 'bg-red-500 text-white scale-110 shadow-md shadow-red-500/20' 
+                      <div className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-500 ${active
+                          ? 'bg-red-500 text-white scale-110 shadow-md shadow-red-500/20'
                           : 'bg-white text-gray-400 border border-gray-200'
-                      } ${current ? 'ring-4 ring-red-100 animate-pulse' : ''}`}>
+                        } ${current ? 'ring-4 ring-red-100 animate-pulse' : ''}`}>
                         {item.icon}
                       </div>
                       <span className={`text-[9px] font-extrabold ${active ? 'text-gray-900' : 'text-gray-400'}`}>
@@ -808,10 +803,10 @@ export const OrderConfirmation = ({ step, restaurant, onBack }) => {
                     </div>
                     {idx < arr.length - 1 && (
                       <div className="tracker-connector flex-1 mx-1">
-                        <div 
-                          className="tracker-connector-fill h-full bg-red-500" 
-                          style={{ 
-                            transform: `scaleX(${step > item.s ? 1 : 0})`, 
+                        <div
+                          className="tracker-connector-fill h-full bg-red-500"
+                          style={{
+                            transform: `scaleX(${step > item.s ? 1 : 0})`,
                             transformOrigin: 'left',
                             transition: 'transform 0.5s ease'
                           }}
@@ -822,15 +817,15 @@ export const OrderConfirmation = ({ step, restaurant, onBack }) => {
                 );
               })}
             </div>
-            
+
             <div className="text-center bg-white p-2.5 rounded-xl border border-gray-100/50">
               <span className="text-[10px] font-bold text-gray-400">Estimated Delivery Time</span>
               <p className="font-black text-sm text-gray-900 mt-0.5">20-30 minutes</p>
             </div>
           </div>
         </div>
-        
-        <button 
+
+        <button
           onClick={onBack}
           className="w-full bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-2xl font-bold transition-all shadow-lg text-center"
         >
@@ -842,18 +837,18 @@ export const OrderConfirmation = ({ step, restaurant, onBack }) => {
 };
 
 // Home Dashboard Component
-export const HomeDashboard = ({ 
-  restaurants, 
-  onSelectRestaurant, 
-  onCourierClick, 
-  onAnythingClick, 
-  onSupermarketClick, 
+export const HomeDashboard = ({
+  restaurants,
+  onSelectRestaurant,
+  onCourierClick,
+  onAnythingClick,
+  onSupermarketClick,
   onPharmacyClick,
   onSearchStore
 }) => {
   const [searchVal, setSearchVal] = useState('');
-  
-  const filteredStores = restaurants.filter(r => 
+
+  const filteredStores = restaurants.filter(r =>
     r.name.toLowerCase().includes(searchVal.toLowerCase()) ||
     r.address.toLowerCase().includes(searchVal.toLowerCase())
   );
@@ -862,78 +857,78 @@ export const HomeDashboard = ({
     <div className="pb-16 anim-fade-in">
       {/* Search Header */}
       <div className="px-4 pt-4 pb-3 bg-white space-y-3">
-        <SearchBar 
-          value={searchVal} 
-          onChange={(val) => { setSearchVal(val); onSearchStore(val); }} 
-          onClear={() => { setSearchVal(''); onSearchStore(''); }} 
-          placeholder="Search for restaurants or stores..." 
+        <SearchBar
+          value={searchVal}
+          onChange={(val) => { setSearchVal(val); onSearchStore(val); }}
+          onClear={() => { setSearchVal(''); onSearchStore(''); }}
+          placeholder="Search for restaurants or stores..."
         />
       </div>
 
       {/* Glovo Circular Navigation Grid */}
       <div className="px-4 py-4 bg-white border-b border-gray-100">
         <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-3">What can we bring you?</h3>
-        
+
         <div className="grid grid-cols-3 gap-4">
           {/* Food Bubble */}
-          <button 
+          <button
             onClick={() => onSelectRestaurant(restaurants[0])} // Default to McDonald's or show category
             className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
           >
             <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center shadow-sm border border-orange-150 group-hover:scale-105 group-hover:shadow-md transition-all duration-300">
               <svg className="w-10 h-10 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 44C12 30 18 18 32 18C46 18 52 30 52 44H12Z" fill="url(#food-grad-1)"/>
-                <rect x="8" y="44" width="48" height="6" rx="3" fill="#FFB74D"/>
-                <rect x="14" y="50" width="36" height="4" rx="2" fill="#FFA726"/>
-                <circle cx="32" cy="13" r="4" fill="#FFB74D"/>
-                <path d="M32 17V18" stroke="#FFB74D" strokeWidth="2"/>
+                <path d="M12 44C12 30 18 18 32 18C46 18 52 30 52 44H12Z" fill="url(#food-grad-1)" />
+                <rect x="8" y="44" width="48" height="6" rx="3" fill="#FFB74D" />
+                <rect x="14" y="50" width="36" height="4" rx="2" fill="#FFA726" />
+                <circle cx="32" cy="13" r="4" fill="#FFB74D" />
+                <path d="M32 17V18" stroke="#FFB74D" strokeWidth="2" />
                 <defs>
                   <linearGradient id="food-grad-1" x1="32" y1="18" x2="32" y2="44" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#FFE082"/>
-                    <stop offset="1" stopColor="#FFB74D"/>
+                    <stop stopColor="#FFE082" />
+                    <stop offset="1" stopColor="#FFB74D" />
                   </linearGradient>
                 </defs>
               </svg>
             </div>
             <span className="text-[11px] font-bold text-gray-800">Food</span>
           </button>
-          
+
           {/* Courier Bubble */}
-          <button 
+          <button
             onClick={onCourierClick}
             className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
           >
             <div className="w-16 h-16 rounded-full bg-purple-50 flex items-center justify-center shadow-sm border border-purple-150 group-hover:scale-105 group-hover:shadow-md transition-all duration-300">
               <svg className="w-10 h-10 transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M32 6L54 16L32 26L10 16L32 6Z" fill="#CE93D8"/>
-                <path d="M10 16V42L32 52V26L10 16Z" fill="#ab47bc"/>
-                <path d="M54 16V42L32 52V26L54 16Z" fill="#ba68c8"/>
-                <path d="M26 13.5L32 11L38 13.5L32 16L26 13.5Z" fill="#FFE082"/>
-                <path d="M30 17V34L32 35V18L30 17Z" fill="#FFCA28"/>
-                <path d="M4 22H12M2 30H9M4 38H11" stroke="#CE93D8" strokeWidth="2.5" strokeLinecap="round"/>
+                <path d="M32 6L54 16L32 26L10 16L32 6Z" fill="#CE93D8" />
+                <path d="M10 16V42L32 52V26L10 16Z" fill="#ab47bc" />
+                <path d="M54 16V42L32 52V26L54 16Z" fill="#ba68c8" />
+                <path d="M26 13.5L32 11L38 13.5L32 16L26 13.5Z" fill="#FFE082" />
+                <path d="M30 17V34L32 35V18L30 17Z" fill="#FFCA28" />
+                <path d="M4 22H12M2 30H9M4 38H11" stroke="#CE93D8" strokeWidth="2.5" strokeLinecap="round" />
               </svg>
             </div>
             <span className="text-[11px] font-bold text-gray-800">Courier</span>
           </button>
-          
+
           {/* Anything Bubble */}
-          <button 
+          <button
             onClick={onAnythingClick}
             className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
           >
             <div className="w-16 h-16 rounded-full bg-pink-50 flex items-center justify-center shadow-sm border border-pink-150 group-hover:scale-105 group-hover:shadow-md transition-all duration-300">
               <svg className="w-10 h-10 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="14" y="24" width="36" height="28" rx="4" fill="url(#any-grad-1)"/>
-                <rect x="11" y="18" width="42" height="8" rx="2" fill="#7986CB"/>
-                <rect x="30" y="18" width="4" height="34" fill="#FF4081"/>
-                <rect x="14" y="36" width="36" height="4" fill="#FF4081"/>
-                <path d="M32 18C28 13 22 13 22 18C22 23 32 18 32 18Z" fill="#FF4081"/>
-                <path d="M32 18C36 13 42 13 42 18C42 23 32 18 32 18Z" fill="#FF4081"/>
-                <circle cx="32" cy="18" r="2" fill="#FFF"/>
+                <rect x="14" y="24" width="36" height="28" rx="4" fill="url(#any-grad-1)" />
+                <rect x="11" y="18" width="42" height="8" rx="2" fill="#7986CB" />
+                <rect x="30" y="18" width="4" height="34" fill="#FF4081" />
+                <rect x="14" y="36" width="36" height="4" fill="#FF4081" />
+                <path d="M32 18C28 13 22 13 22 18C22 23 32 18 32 18Z" fill="#FF4081" />
+                <path d="M32 18C36 13 42 13 42 18C42 23 32 18 32 18Z" fill="#FF4081" />
+                <circle cx="32" cy="18" r="2" fill="#FFF" />
                 <defs>
                   <linearGradient id="any-grad-1" x1="32" y1="24" x2="32" y2="52" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#9FA8DA"/>
-                    <stop offset="1" stopColor="#5C6BC0"/>
+                    <stop stopColor="#9FA8DA" />
+                    <stop offset="1" stopColor="#5C6BC0" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -942,22 +937,22 @@ export const HomeDashboard = ({
           </button>
 
           {/* Supermarket Bubble */}
-          <button 
+          <button
             onClick={onSupermarketClick}
             className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
           >
             <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center shadow-sm border border-emerald-150 group-hover:scale-105 group-hover:shadow-md transition-all duration-300">
               <svg className="w-10 h-10 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 20H46L43 54H21L18 20Z" fill="url(#groc-grad-1)"/>
-                <path d="M18 20L21 26H43L46 20H18Z" fill="#A1887F"/>
-                <path d="M26 20V15C26 12.8 27.8 11 30 11H34C36.2 11 38 12.8 38 15V20" stroke="#8D6E63" strokeWidth="3" strokeLinecap="round"/>
-                <rect x="23" y="10" width="6" height="14" rx="1.5" fill="#FFF" transform="rotate(-15 23 10)"/>
-                <path d="M36 15L39 7L42 15H36Z" fill="#FF7043"/>
-                <path d="M37 7C39 4 41 9 39 7" stroke="#4CAF50" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M18 20H46L43 54H21L18 20Z" fill="url(#groc-grad-1)" />
+                <path d="M18 20L21 26H43L46 20H18Z" fill="#A1887F" />
+                <path d="M26 20V15C26 12.8 27.8 11 30 11H34C36.2 11 38 12.8 38 15V20" stroke="#8D6E63" strokeWidth="3" strokeLinecap="round" />
+                <rect x="23" y="10" width="6" height="14" rx="1.5" fill="#FFF" transform="rotate(-15 23 10)" />
+                <path d="M36 15L39 7L42 15H36Z" fill="#FF7043" />
+                <path d="M37 7C39 4 41 9 39 7" stroke="#4CAF50" strokeWidth="2" strokeLinecap="round" />
                 <defs>
                   <linearGradient id="groc-grad-1" x1="32" y1="20" x2="32" y2="54" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#D7CCC8"/>
-                    <stop offset="1" stopColor="#BCAAA4"/>
+                    <stop stopColor="#D7CCC8" />
+                    <stop offset="1" stopColor="#BCAAA4" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -966,18 +961,18 @@ export const HomeDashboard = ({
           </button>
 
           {/* Pharmacy Bubble */}
-          <button 
+          <button
             onClick={onPharmacyClick}
             className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
           >
             <div className="w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center shadow-sm border border-teal-155 group-hover:scale-105 group-hover:shadow-md transition-all duration-300">
               <svg className="w-10 h-10 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="28" fill="#E0F2F1"/>
-                <path d="M32 16V48" stroke="#00B0FF" strokeWidth="8" strokeLinecap="round"/>
-                <path d="M16 32H48" stroke="#00B0FF" strokeWidth="8" strokeLinecap="round"/>
+                <circle cx="32" cy="32" r="28" fill="#E0F2F1" />
+                <path d="M32 16V48" stroke="#00B0FF" strokeWidth="8" strokeLinecap="round" />
+                <path d="M16 32H48" stroke="#00B0FF" strokeWidth="8" strokeLinecap="round" />
                 <g transform="rotate(45 32 32)">
-                  <rect x="25" y="18" width="14" height="28" rx="7" fill="#FF5252" stroke="#FFF" strokeWidth="2"/>
-                  <line x1="25" y1="32" x2="39" y2="32" stroke="#FFF" strokeWidth="2"/>
+                  <rect x="25" y="18" width="14" height="28" rx="7" fill="#FF5252" stroke="#FFF" strokeWidth="2" />
+                  <line x1="25" y1="32" x2="39" y2="32" stroke="#FFF" strokeWidth="2" />
                 </g>
               </svg>
             </div>
@@ -985,17 +980,17 @@ export const HomeDashboard = ({
           </button>
 
           {/* Prime Bubble */}
-          <div 
+          <div
             className="flex flex-col items-center space-y-1.5 focus:outline-none group opacity-85 cursor-not-allowed"
           >
             <div className="w-16 h-16 rounded-full bg-sky-50 flex items-center justify-center shadow-sm border border-sky-150">
               <svg className="w-10 h-10 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="28" fill="#E3F2FD"/>
-                <path d="M36 8L20 34H32L28 56L44 30H32L36 8Z" fill="url(#prime-grad-1)"/>
+                <circle cx="32" cy="32" r="28" fill="#E3F2FD" />
+                <path d="M36 8L20 34H32L28 56L44 30H32L36 8Z" fill="url(#prime-grad-1)" />
                 <defs>
                   <linearGradient id="prime-grad-1" x1="32" y1="8" x2="32" y2="56" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#4FC3F7"/>
-                    <stop offset="1" stopColor="#0288D1"/>
+                    <stop stopColor="#4FC3F7" />
+                    <stop offset="1" stopColor="#0288D1" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -1014,7 +1009,7 @@ export const HomeDashboard = ({
 
         <div className="space-y-3">
           {filteredStores.map(store => (
-            <div 
+            <div
               key={store.name}
               onClick={() => onSelectRestaurant(store)}
               className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex"
@@ -1030,7 +1025,7 @@ export const HomeDashboard = ({
                   </div>
                   <p className="text-[10px] text-gray-400 mt-0.5">{store.address}</p>
                 </div>
-                
+
                 <div className="flex items-center justify-between text-[10px] font-bold text-gray-600 mt-2">
                   <span className="flex items-center text-yellow-500">
                     ★ {store.rating}%
@@ -1089,9 +1084,9 @@ export const CourierForm = ({ onSubmit, onBack }) => {
         </div>
         <div className="w-8 h-8 rounded-full bg-purple-50 flex items-center justify-center border border-purple-100">
           <svg className="w-5 h-5 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="21 8 21 21 3 21 3 8"/>
-            <rect x="1" y="3" width="22" height="5"/>
-            <line x1="10" y1="12" x2="14" y2="12"/>
+            <polyline points="21 8 21 21 3 21 3 8" />
+            <rect x="1" y="3" width="22" height="5" />
+            <line x1="10" y1="12" x2="14" y2="12" />
           </svg>
         </div>
       </div>
@@ -1101,34 +1096,34 @@ export const CourierForm = ({ onSubmit, onBack }) => {
 
         <div className="space-y-1">
           <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Pickup Address</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             placeholder="Where should we collect the package?"
             value={pickup}
             onChange={(e) => setPickup(e.target.value)}
-            className="input-field" 
+            className="input-field"
           />
         </div>
 
         <div className="space-y-1">
           <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Delivery Address</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             placeholder="Where should we deliver the package?"
             value={delivery}
             onChange={(e) => setDelivery(e.target.value)}
-            className="input-field" 
+            className="input-field"
           />
         </div>
 
         <div className="space-y-1">
           <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Package Description</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             placeholder="e.g. Office keys, Document, Charger..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="input-field" 
+            className="input-field"
           />
         </div>
       </div>
@@ -1142,31 +1137,30 @@ export const CourierForm = ({ onSubmit, onBack }) => {
               <button
                 key={k}
                 onClick={() => setSize(k)}
-                className={`w-full flex items-center justify-between p-3.5 rounded-xl border text-[11px] font-bold transition-all ${
-                  isActive 
-                    ? 'border-purple-500 bg-purple-50/20 text-purple-900 shadow-sm' 
+                className={`w-full flex items-center justify-between p-3.5 rounded-xl border text-[11px] font-bold transition-all ${isActive
+                    ? 'border-purple-500 bg-purple-50/20 text-purple-900 shadow-sm'
                     : 'border-gray-100 bg-white text-gray-600 hover:border-gray-250'
-                }`}
+                  }`}
               >
                 <div className="flex items-center space-x-2.5">
                   <span className={`w-6 h-6 rounded-lg flex items-center justify-center ${isActive ? 'bg-purple-100 text-purple-700' : 'bg-gray-50 text-gray-400'}`}>
                     {k === 'Envelope' ? (
                       <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                        <polyline points="22,6 12,13 2,6"/>
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
                       </svg>
                     ) : k === 'Box' ? (
                       <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <polyline points="21 8 21 21 3 21 3 8"/>
-                        <rect x="1" y="3" width="22" height="5"/>
-                        <line x1="10" y1="12" x2="14" y2="12"/>
+                        <polyline points="21 8 21 21 3 21 3 8" />
+                        <rect x="1" y="3" width="22" height="5" />
+                        <line x1="10" y1="12" x2="14" y2="12" />
                       </svg>
                     ) : (
                       <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <rect x="1" y="3" width="15" height="13"/>
-                        <polygon points="16 8 20 8 23 11 23 16 16 16"/>
-                        <circle cx="5.5" cy="18.5" r="2.5"/>
-                        <circle cx="18.5" cy="18.5" r="2.5"/>
+                        <rect x="1" y="3" width="15" height="13" />
+                        <polygon points="16 8 20 8 23 11 23 16 16 16" />
+                        <circle cx="5.5" cy="18.5" r="2.5" />
+                        <circle cx="18.5" cy="18.5" r="2.5" />
                       </svg>
                     )}
                   </span>
@@ -1179,7 +1173,7 @@ export const CourierForm = ({ onSubmit, onBack }) => {
         </div>
       </div>
 
-      <button 
+      <button
         onClick={handleOrder}
         className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3.5 rounded-2xl font-bold transition-all shadow-lg text-center mt-4"
       >
@@ -1221,9 +1215,9 @@ export const AnythingForm = ({ onSubmit, onBack }) => {
         </div>
         <div className="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center border border-pink-100">
           <svg className="w-5 h-5 text-pink-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="22 12 2 12 12 2 22 12"/>
-            <path d="M5.4 12v6a2 2 0 0 0 2 2h9.2a2 2 0 0 0 2-2v-6"/>
-            <circle cx="12" cy="12" r="2"/>
+            <polyline points="22 12 2 12 12 2 22 12" />
+            <path d="M5.4 12v6a2 2 0 0 0 2 2h9.2a2 2 0 0 0 2-2v-6" />
+            <circle cx="12" cy="12" r="2" />
           </svg>
         </div>
       </div>
@@ -1235,7 +1229,7 @@ export const AnythingForm = ({ onSubmit, onBack }) => {
 
         {error && <div className="text-xs text-red-500 font-bold">{error}</div>}
 
-        <textarea 
+        <textarea
           rows={4}
           placeholder="Describe what you want us to buy..."
           value={request}
@@ -1249,7 +1243,7 @@ export const AnythingForm = ({ onSubmit, onBack }) => {
         <span>{price.toFixed(2)} MAD</span>
       </div>
 
-      <button 
+      <button
         onClick={handleOrder}
         className="w-full bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-2xl font-bold transition-all shadow-lg text-center mt-4"
       >
@@ -1274,7 +1268,7 @@ export const OrdersHistory = ({ orders = [], onReorder }) => {
       <h2 className="text-base font-black text-gray-900 border-b border-gray-100 pb-3">Your Orders</h2>
 
       {displayOrders.map(order => (
-        <div 
+        <div
           key={order.id}
           className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm space-y-3"
         >
@@ -1283,9 +1277,8 @@ export const OrdersHistory = ({ orders = [], onReorder }) => {
               <h4 className="font-extrabold text-sm text-gray-900">{order.storeName}</h4>
               <p className="text-[10px] text-gray-400 mt-0.5">Order ID: #{order.id} • {order.date}</p>
             </div>
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-              order.status === 'Delivered' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'
-            }`}>
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${order.status === 'Delivered' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'
+              }`}>
               {order.status}
             </span>
           </div>
@@ -1293,7 +1286,7 @@ export const OrdersHistory = ({ orders = [], onReorder }) => {
           <div className="flex justify-between items-center text-xs pt-1">
             <span className="font-bold text-gray-700">{order.itemsCount} items • {order.total.toFixed(2)} MAD</span>
             {order.type === 'Food' && (
-              <button 
+              <button
                 onClick={() => onReorder(order.storeName)}
                 className="bg-red-50 hover:bg-red-100 text-red-500 font-bold px-3 py-1 rounded-lg text-[10px]"
               >
@@ -1320,7 +1313,7 @@ export const ProfileScreen = ({ onLogout, onManageAddresses }) => {
         </div>
         <div>
           <h3 className="font-extrabold text-base leading-tight">Ayoub Enejjar</h3>
-          <p className="text-[10px] text-white/80 font-bold mt-0.5">Premium Glovo Member</p>
+          <p className="text-[10px] text-white/80 font-bold mt-0.5">Premium Delo Member</p>
         </div>
       </div>
 
@@ -1329,7 +1322,7 @@ export const ProfileScreen = ({ onLogout, onManageAddresses }) => {
         <div>
           <h4 className="font-black text-xs text-blue-900 flex items-center">
             <svg className="w-3.5 h-3.5 text-blue-500 mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
             </svg>
             Glovo Prime active
           </h4>
@@ -1343,21 +1336,21 @@ export const ProfileScreen = ({ onLogout, onManageAddresses }) => {
         <div className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50">
           <div className="flex items-center space-x-2">
             <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <rect x="2" y="5" width="20" height="14" rx="2"/>
-              <line x1="2" y1="10" x2="22" y2="10"/>
+              <rect x="2" y="5" width="20" height="14" rx="2" />
+              <line x1="2" y1="10" x2="22" y2="10" />
             </svg>
             <span>Saved Payment Methods</span>
           </div>
           <span className="text-gray-400 text-[10px]">➔</span>
         </div>
-        <div 
+        <div
           onClick={onManageAddresses}
           className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50"
         >
           <div className="flex items-center space-x-2">
             <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-              <circle cx="12" cy="10" r="3"/>
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
             </svg>
             <span>Saved Delivery Addresses</span>
           </div>
@@ -1366,8 +1359,8 @@ export const ProfileScreen = ({ onLogout, onManageAddresses }) => {
         <div className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50">
           <div className="flex items-center space-x-2">
             <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9z"/>
-              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9z" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>
             <span>Notification Preferences</span>
           </div>
@@ -1376,9 +1369,9 @@ export const ProfileScreen = ({ onLogout, onManageAddresses }) => {
         <div className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50">
           <div className="flex items-center space-x-2">
             <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="2" y1="12" x2="22" y2="12"/>
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              <circle cx="12" cy="12" r="10" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
             </svg>
             <span>Language Settings</span>
           </div>
@@ -1387,7 +1380,7 @@ export const ProfileScreen = ({ onLogout, onManageAddresses }) => {
       </div>
 
       {/* logout */}
-      <button 
+      <button
         onClick={onLogout}
         className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-2xl font-bold transition-all text-center text-xs"
       >
@@ -1401,17 +1394,17 @@ export const ProfileScreen = ({ onLogout, onManageAddresses }) => {
 export const ComingSoonModal = ({ category, onClose }) => {
   return (
     <div className="modal-backdrop" onClick={onClose} style={{ zIndex: 100 }}>
-      <div 
+      <div
         className="bg-white w-full max-w-[430px] rounded-t-3xl overflow-hidden anim-slide-up p-6 text-center space-y-5"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-16 h-16 mx-auto bg-amber-50 rounded-full flex items-center justify-center border border-amber-100/50 shadow-inner">
           <svg className="w-8 h-8 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="2" y="6" width="20" height="12" rx="2"/>
-            <line x1="2" y1="10" x2="22" y2="10"/>
-            <line x1="6" y1="14" x2="6.01" y2="14"/>
-            <line x1="18" y1="14" x2="18.01" y2="14"/>
-            <path d="M12 2v4"/>
+            <rect x="2" y="6" width="20" height="12" rx="2" />
+            <line x1="2" y1="10" x2="22" y2="10" />
+            <line x1="6" y1="14" x2="6.01" y2="14" />
+            <line x1="18" y1="14" x2="18.01" y2="14" />
+            <path d="M12 2v4" />
           </svg>
         </div>
         <div className="space-y-1.5">
@@ -1420,8 +1413,8 @@ export const ComingSoonModal = ({ category, onClose }) => {
             We are working hard to expand our retail network and bring grocery partners to Maarif, Casablanca.
           </p>
         </div>
-        
-        <button 
+
+        <button
           onClick={onClose}
           className="w-full bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-2xl font-bold transition-all"
         >
@@ -1469,54 +1462,54 @@ export const LocationModal = ({ currentLocation, onSelectLocation, onClose }) =>
             'User-Agent': 'GlovoMoroccoApp/1.0'
           }
         })
-        .then(res => {
-          if (!res.ok) throw new Error('Failed to fetch address details');
-          return res.json();
-        })
-        .then(data => {
-          if (data && data.address) {
-            const addr = data.address;
-            const road = addr.road || addr.pedestrian || addr.suburb || '';
-            const neighborhood = addr.neighbourhood || addr.quarter || addr.suburb || '';
-            const city = addr.city || addr.town || addr.village || addr.county || '';
-            
-            let displayAddress = '';
-            if (road) displayAddress += road;
-            if (neighborhood && neighborhood !== road) {
-              displayAddress += (displayAddress ? ', ' : '') + neighborhood;
-            }
-            if (city) {
-              displayAddress += (displayAddress ? ', ' : '') + city;
-            }
+          .then(res => {
+            if (!res.ok) throw new Error('Failed to fetch address details');
+            return res.json();
+          })
+          .then(data => {
+            if (data && data.address) {
+              const addr = data.address;
+              const road = addr.road || addr.pedestrian || addr.suburb || '';
+              const neighborhood = addr.neighbourhood || addr.quarter || addr.suburb || '';
+              const city = addr.city || addr.town || addr.village || addr.county || '';
 
-            if (!displayAddress.trim()) {
-              displayAddress = data.display_name.split(',').slice(0, 3).join(',').trim();
-            }
+              let displayAddress = '';
+              if (road) displayAddress += road;
+              if (neighborhood && neighborhood !== road) {
+                displayAddress += (displayAddress ? ', ' : '') + neighborhood;
+              }
+              if (city) {
+                displayAddress += (displayAddress ? ', ' : '') + city;
+              }
 
-            onSelectLocation(displayAddress);
-          } else {
-            onSelectLocation(`GPS (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`);
-          }
-          setIsLocating(false);
-          onClose();
-        })
-        .catch(err => {
-          console.error(err);
-          // Reliable regional fallback for Morocco
-          setTimeout(() => {
-            let resolvedAddr = 'Maarif, Casablanca';
-            if (latitude >= 33 && latitude <= 34 && longitude >= -8 && longitude <= -7) {
-              resolvedAddr = 'Agdal, Rabat (GPS Fallback)';
-            } else if (latitude >= 31 && latitude <= 32 && longitude >= -9 && longitude <= -7.5) {
-              resolvedAddr = 'Gueliz, Marrakech (GPS Fallback)';
+              if (!displayAddress.trim()) {
+                displayAddress = data.display_name.split(',').slice(0, 3).join(',').trim();
+              }
+
+              onSelectLocation(displayAddress);
             } else {
-              resolvedAddr = `Morocco (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`;
+              onSelectLocation(`GPS (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`);
             }
-            onSelectLocation(resolvedAddr);
             setIsLocating(false);
             onClose();
-          }, 1000);
-        });
+          })
+          .catch(err => {
+            console.error(err);
+            // Reliable regional fallback for Morocco
+            setTimeout(() => {
+              let resolvedAddr = 'Maarif, Casablanca';
+              if (latitude >= 33 && latitude <= 34 && longitude >= -8 && longitude <= -7) {
+                resolvedAddr = 'Agdal, Rabat (GPS Fallback)';
+              } else if (latitude >= 31 && latitude <= 32 && longitude >= -9 && longitude <= -7.5) {
+                resolvedAddr = 'Gueliz, Marrakech (GPS Fallback)';
+              } else {
+                resolvedAddr = `Morocco (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`;
+              }
+              onSelectLocation(resolvedAddr);
+              setIsLocating(false);
+              onClose();
+            }, 1000);
+          });
       },
       (error) => {
         console.error(error);
@@ -1545,7 +1538,7 @@ export const LocationModal = ({ currentLocation, onSelectLocation, onClose }) =>
 
   return (
     <div className="modal-backdrop" onClick={onClose} style={{ zIndex: 150 }}>
-      <div 
+      <div
         className="bg-white w-full max-w-[430px] rounded-t-3xl overflow-hidden anim-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
@@ -1568,16 +1561,16 @@ export const LocationModal = ({ currentLocation, onSelectLocation, onClose }) =>
             <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Enter street, neighborhood, or city..."
               className="w-full bg-transparent outline-none text-xs font-semibold"
             />
             {searchQuery && (
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => setSearchQuery('')}
                 className="p-0.5 hover:bg-gray-100 rounded-full"
               >
@@ -1592,11 +1585,10 @@ export const LocationModal = ({ currentLocation, onSelectLocation, onClose }) =>
           <button
             onClick={handleGetCurrentLocation}
             disabled={isLocating}
-            className={`w-full flex items-center justify-between p-3.5 rounded-2xl border transition-all ${
-              isLocating
+            className={`w-full flex items-center justify-between p-3.5 rounded-2xl border transition-all ${isLocating
                 ? 'bg-red-50/50 border-red-200 text-red-600'
                 : 'bg-red-50 hover:bg-red-100/70 border-red-100 text-red-500'
-            }`}
+              }`}
           >
             <div className="flex items-center space-x-2.5">
               {isLocating ? (
@@ -1637,11 +1629,10 @@ export const LocationModal = ({ currentLocation, onSelectLocation, onClose }) =>
                       onSelectLocation(neighborhood);
                       onClose();
                     }}
-                    className={`w-full flex items-center space-x-3 p-3 rounded-xl border text-left transition-all ${
-                      isSelected
+                    className={`w-full flex items-center space-x-3 p-3 rounded-xl border text-left transition-all ${isSelected
                         ? 'border-emerald-500 bg-emerald-50/30 text-emerald-800'
                         : 'border-gray-150 bg-gray-50/50 hover:bg-gray-100/50 text-gray-700'
-                    }`}
+                      }`}
                   >
                     <svg className={`w-4 h-4 ${isSelected ? 'text-emerald-500' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
