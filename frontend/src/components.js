@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 // Header Component
-export const Header = ({ onBack, onSearchToggle, showSearch, title = "Deliver to", location = "Maarif, Casablanca", onLocationClick }) => {
+export const Header = ({ onBack, onSearchToggle, showSearch, title = "Deliver to", location = "Maarif, Casablanca", onLocationClick, theme = "light", onThemeToggle, t = {} }) => {
+  const displayTitle = title === "Deliver to" && t.deliverTo ? t.deliverTo : title;
   return (
     <div className="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-100 sticky top-0 z-40">
       <div className="flex items-center space-x-3">
@@ -16,7 +17,7 @@ export const Header = ({ onBack, onSearchToggle, showSearch, title = "Deliver to
           onClick={onLocationClick}
           className={`flex flex-col ${onLocationClick ? 'cursor-pointer select-none hover:opacity-80 transition-opacity' : ''}`}
         >
-          <span className="text-[10px] text-gray-400 block font-bold uppercase tracking-wider">{title}</span>
+          <span className="text-[10px] text-gray-400 block font-bold uppercase tracking-wider">{displayTitle}</span>
           <span className="text-xs font-bold text-gray-800 flex items-center">
             {location}
             {onLocationClick && (
@@ -36,11 +37,27 @@ export const Header = ({ onBack, onSearchToggle, showSearch, title = "Deliver to
             </svg>
           </button>
         )}
-        <button className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-600">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.3} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
-        </button>
+        {onThemeToggle && (
+          <button onClick={onThemeToggle} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-600 active:scale-90 duration-150" aria-label="Toggle Theme">
+            {theme === 'dark' ? (
+              <svg className="w-5 h-5 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            )}
+          </button>
+        )}
       </div>
     </div>
   );
@@ -413,7 +430,7 @@ export const AddToCartModal = ({ item, onConfirm, onClose, currency }) => {
 };
 
 // Bottom Navigation Component
-export const BottomNav = ({ active, onChange, cartCount }) => {
+export const BottomNav = ({ active, onChange, cartCount, t = {} }) => {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-gray-100 z-30 py-1 shadow-sm">
       <div className="max-w-[430px] mx-auto flex justify-around items-center">
@@ -421,14 +438,14 @@ export const BottomNav = ({ active, onChange, cartCount }) => {
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
-          <span>Home</span>
+          <span>{t.home || "Home"}</span>
         </button>
 
         <button onClick={() => onChange('orders')} className={`nav-item ${active === 'orders' ? 'active' : ''}`}>
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
           </svg>
-          <span>Orders</span>
+          <span>{t.orders || "Orders"}</span>
         </button>
 
         <button onClick={() => onChange('cart')} className={`nav-item ${active === 'cart' ? 'active' : ''} relative`}>
@@ -436,14 +453,14 @@ export const BottomNav = ({ active, onChange, cartCount }) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
           </svg>
           {cartCount > 0 && <span className="badge">{cartCount}</span>}
-          <span>Basket</span>
+          <span>{t.basket || "Basket"}</span>
         </button>
 
         <button onClick={() => onChange('profile')} className={`nav-item ${active === 'profile' ? 'active' : ''}`}>
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>
-          <span>Profile</span>
+          <span>{t.profile || "Profile"}</span>
         </button>
       </div>
     </div>
@@ -451,7 +468,7 @@ export const BottomNav = ({ active, onChange, cartCount }) => {
 };
 
 // Checkout Modal Component
-export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddress }) => {
+export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddress, t = {} }) => {
   const [address, setAddress] = useState(defaultAddress || 'Maarif, Casablanca');
   const [payment, setPayment] = useState('Cash');
   const [phone, setPhone] = useState('+212 612 345678');
@@ -464,7 +481,7 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
       >
         <div className="p-5 space-y-5">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-black text-gray-900">Checkout</h2>
+            <h2 className="text-lg font-black text-gray-900">{t.checkout || "Checkout"}</h2>
             <button onClick={onClose} className="p-1.5 hover:bg-gray-100 rounded-full transition-colors">
               <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
@@ -475,7 +492,7 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
           <div className="space-y-4">
             {/* Delivery address */}
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Delivery Address</label>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">{t.deliveryAddress || "Delivery Address"}</label>
               <input
                 type="text"
                 value={address}
@@ -486,7 +503,7 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
 
             {/* Phone */}
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Phone Number</label>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">{t.phoneNumber || "Phone Number"}</label>
               <input
                 type="text"
                 value={phone}
@@ -497,10 +514,11 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
 
             {/* Payment Method */}
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Payment Method</label>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">{t.paymentMethod || "Payment Method"}</label>
               <div className="flex space-x-2">
                 {['Cash', 'Credit Card'].map(method => {
                   const isActive = payment === method;
+                  const displayMethodName = method === 'Cash' ? (t.cash || 'Cash') : (t.creditCard || 'Credit Card');
                   return (
                     <button
                       key={method}
@@ -522,7 +540,7 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
                           <line x1="2" y1="10" x2="22" y2="10" />
                         </svg>
                       )}
-                      <span>{method}</span>
+                      <span>{displayMethodName}</span>
                     </button>
                   );
                 })}
@@ -531,7 +549,7 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
           </div>
 
           <div className="bg-gray-50 p-3.5 rounded-2xl flex justify-between items-center border border-gray-100">
-            <span className="font-bold text-xs text-gray-800">Total Price</span>
+            <span className="font-bold text-xs text-gray-800">{t.totalPrice || "Total Price"}</span>
             <span className="font-black text-base text-gray-900">{total.toFixed(2)} {currency}</span>
           </div>
 
@@ -539,7 +557,7 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
             onClick={onConfirm}
             className="w-full bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-2xl font-bold transition-all shadow-lg text-center"
           >
-            Confirm Order
+            {t.confirmOrder || "Confirm Order"}
           </button>
         </div>
       </div>
@@ -551,7 +569,7 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddr
 export const CartView = ({
   cart, total, count, restaurant, onUpdateQty, onBack,
   onCheckout, showCheckout, onConfirmOrder, onCloseCheckout,
-  defaultAddress
+  defaultAddress, t = {}
 }) => {
   const deliveryFee = restaurant.deliveryFee;
   const isBelowMin = total < restaurant.minOrder;
@@ -569,7 +587,7 @@ export const CartView = ({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <h1 className="text-lg font-black text-gray-900">Your Basket</h1>
+          <h1 className="text-lg font-black text-gray-900">{t.yourBasket || "Your Basket"}</h1>
         </div>
 
         {/* Main Content */}
@@ -583,13 +601,13 @@ export const CartView = ({
                   <path d="M16 10a4 4 0 0 1-8 0" />
                 </svg>
               </div>
-              <h2 className="text-base font-extrabold text-gray-900">Your basket is empty</h2>
-              <p className="text-xs text-gray-500">Go back to add delicious meals to your basket!</p>
+              <h2 className="text-base font-extrabold text-gray-900">{t.basketEmpty || "Your basket is empty"}</h2>
+              <p className="text-xs text-gray-500">{t.basketEmptyDesc || "Go back to add delicious meals to your basket!"}</p>
               <button
                 onClick={onBack}
                 className="bg-red-500 hover:bg-red-600 text-white font-bold px-6 py-2.5 rounded-xl transition-all shadow-md btn-spring"
               >
-                Shop Now
+                {t.shopNow || "Shop Now"}
               </button>
             </div>
           ) : (
@@ -598,7 +616,7 @@ export const CartView = ({
               <div className="bg-gray-50 rounded-2xl p-3 flex items-center justify-between border border-gray-100">
                 <div>
                   <h3 className="font-extrabold text-gray-950 text-xs">{restaurant.name}</h3>
-                  <p className="text-[10px] text-gray-400 mt-0.5">Delivered from {restaurant.address}</p>
+                  <p className="text-[10px] text-gray-400 mt-0.5">{t.deliveredFrom || "Delivered from"} {restaurant.address}</p>
                 </div>
                 <div className="w-8 h-8 bg-yellow-400 rounded-xl flex items-center justify-center text-white font-bold text-sm">
                   {restaurant.name.charAt(0)}
@@ -607,7 +625,7 @@ export const CartView = ({
 
               {/* Item List */}
               <div className="space-y-2">
-                <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Items</h3>
+                <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{t.items || "Items"}</h3>
                 <div className="space-y-2">
                   {cart.map(item => (
                     <div key={item.id} className="flex items-center justify-between p-2.5 bg-white rounded-2xl border border-gray-100 shadow-sm">
@@ -648,34 +666,34 @@ export const CartView = ({
                     <line x1="12" y1="17" x2="12.01" y2="17" />
                   </svg>
                   <div className="text-[10px] text-amber-800 leading-relaxed font-bold">
-                    <p className="font-extrabold mb-0.5">Small Order Fee Applied</p>
-                    Your order subtotal is below the {restaurant.minOrder.toFixed(2)} MAD minimum.
-                    Add {(restaurant.minOrder - total).toFixed(2)} MAD to avoid the extra {restaurant.extraFee.toFixed(2)} MAD fee.
+                    <p className="font-extrabold mb-0.5">{t.smallOrderFeeApplied || "Small Order Fee Applied"}</p>
+                    {t.belowMinDesc1 || "Your order subtotal is below the"} {restaurant.minOrder.toFixed(2)} MAD {t.belowMinDesc2 || "minimum."}
+                    {t.belowMinDesc3 || "Add"} {(restaurant.minOrder - total).toFixed(2)} MAD {t.belowMinDesc4 || "to avoid the extra"} {restaurant.extraFee.toFixed(2)} MAD {t.belowMinDesc5 || "fee."}
                   </div>
                 </div>
               )}
 
               {/* Summary breakdown */}
               <div className="bg-gray-50/50 rounded-2xl p-3.5 border border-gray-100 space-y-2">
-                <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Receipt Details</h3>
+                <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{t.receiptDetails || "Receipt Details"}</h3>
                 <div className="space-y-1.5 text-xs text-gray-600">
                   <div className="flex justify-between">
-                    <span>Products Subtotal</span>
+                    <span>{t.subtotal || "Products Subtotal"}</span>
                     <span className="font-bold text-gray-800">{total.toFixed(2)} MAD</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Delivery fee</span>
+                    <span>{t.deliveryFee || "Delivery fee"}</span>
                     <span className="font-bold text-gray-800">{deliveryFee.toFixed(2)} MAD</span>
                   </div>
                   {isBelowMin && (
                     <div className="flex justify-between text-amber-700">
-                      <span>Small order fee</span>
+                      <span>{t.smallOrderFee || "Small order fee"}</span>
                       <span className="font-bold">{smallOrderFee.toFixed(2)} MAD</span>
                     </div>
                   )}
                   <hr className="my-1.5 border-dashed border-gray-200" />
                   <div className="flex justify-between text-sm font-black text-gray-950">
-                    <span>Total to pay</span>
+                    <span>{t.totalToPay || "Total to pay"}</span>
                     <span>{grandTotal.toFixed(2)} MAD</span>
                   </div>
                 </div>
@@ -691,7 +709,7 @@ export const CartView = ({
               onClick={onCheckout}
               className="w-full bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-2xl font-bold transition-all shadow-lg flex justify-between px-5 text-sm"
             >
-              <span>Proceed to Checkout</span>
+              <span>{t.proceedCheckout || "Proceed to Checkout"}</span>
               <span>{grandTotal.toFixed(2)} MAD</span>
             </button>
           </div>
@@ -705,6 +723,7 @@ export const CartView = ({
             currency={restaurant.currency}
             onConfirm={onConfirmOrder}
             defaultAddress={defaultAddress}
+            t={t}
           />
         )}
       </div>
@@ -844,7 +863,8 @@ export const HomeDashboard = ({
   onAnythingClick,
   onSupermarketClick,
   onPharmacyClick,
-  onSearchStore
+  onSearchStore,
+  t = {}
 }) => {
   const [searchVal, setSearchVal] = useState('');
 
@@ -861,13 +881,13 @@ export const HomeDashboard = ({
           value={searchVal}
           onChange={(val) => { setSearchVal(val); onSearchStore(val); }}
           onClear={() => { setSearchVal(''); onSearchStore(''); }}
-          placeholder="Search for restaurants or stores..."
+          placeholder={t.searchPlaceholder || "Search for restaurants or stores..."}
         />
       </div>
 
       {/* Glovo Circular Navigation Grid */}
       <div className="px-4 py-4 bg-white border-b border-gray-100">
-        <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-3">What can we bring you?</h3>
+        <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-3">{t.whatCanWeBring || "What can we bring you?"}</h3>
 
         <div className="grid grid-cols-3 gap-4">
           {/* Food Bubble */}
@@ -890,7 +910,7 @@ export const HomeDashboard = ({
                 </defs>
               </svg>
             </div>
-            <span className="text-[11px] font-bold text-gray-800">Food</span>
+            <span className="text-[11px] font-bold text-gray-800">{t.food || "Food"}</span>
           </button>
 
           {/* Courier Bubble */}
@@ -908,7 +928,7 @@ export const HomeDashboard = ({
                 <path d="M4 22H12M2 30H9M4 38H11" stroke="#CE93D8" strokeWidth="2.5" strokeLinecap="round" />
               </svg>
             </div>
-            <span className="text-[11px] font-bold text-gray-800">Courier</span>
+            <span className="text-[11px] font-bold text-gray-800">{t.courier || "Courier"}</span>
           </button>
 
           {/* Anything Bubble */}
@@ -933,7 +953,7 @@ export const HomeDashboard = ({
                 </defs>
               </svg>
             </div>
-            <span className="text-[11px] font-bold text-gray-800">Anything</span>
+            <span className="text-[11px] font-bold text-gray-800">{t.anything || "Anything"}</span>
           </button>
 
           {/* Supermarket Bubble */}
@@ -957,7 +977,7 @@ export const HomeDashboard = ({
                 </defs>
               </svg>
             </div>
-            <span className="text-[11px] font-bold text-gray-800">Grocery</span>
+            <span className="text-[11px] font-bold text-gray-800">{t.grocery || "Grocery"}</span>
           </button>
 
           {/* Pharmacy Bubble */}
@@ -976,7 +996,7 @@ export const HomeDashboard = ({
                 </g>
               </svg>
             </div>
-            <span className="text-[11px] font-bold text-gray-800">Pharmacy</span>
+            <span className="text-[11px] font-bold text-gray-800">{t.pharmacy || "Pharmacy"}</span>
           </button>
 
           {/* Prime Bubble */}
@@ -995,7 +1015,7 @@ export const HomeDashboard = ({
                 </defs>
               </svg>
             </div>
-            <span className="text-[11px] font-bold text-gray-500">Prime Deals</span>
+            <span className="text-[11px] font-bold text-gray-500">{t.primeDeals || "Prime Deals"}</span>
           </div>
         </div>
       </div>
@@ -1003,8 +1023,8 @@ export const HomeDashboard = ({
       {/* Featured Stores Section */}
       <div className="px-4 py-4 space-y-3">
         <div className="flex justify-between items-center">
-          <h3 className="text-xs font-black text-gray-800 uppercase tracking-wider">Popular Restaurants</h3>
-          <span className="text-[10px] text-red-500 font-bold">See all</span>
+          <h3 className="text-xs font-black text-gray-800 uppercase tracking-wider">{t.popularRestaurants || "Popular Restaurants"}</h3>
+          <span className="text-[10px] text-red-500 font-bold">{t.seeAll || "See all"}</span>
         </div>
 
         <div className="space-y-3">
@@ -1254,7 +1274,7 @@ export const AnythingForm = ({ onSubmit, onBack }) => {
 };
 
 // Orders History Component
-export const OrdersHistory = ({ orders = [], onReorder }) => {
+export const OrdersHistory = ({ orders = [], onReorder, t = {} }) => {
   const mockOrders = [
     { id: '1029', storeName: 'Burger King', itemsCount: 3, date: 'July 11, 2026', total: 108.00, status: 'Delivered', type: 'Food' },
     { id: '0981', storeName: "McDonald's", itemsCount: 2, date: 'July 08, 2026', total: 95.00, status: 'Delivered', type: 'Food' },
@@ -1265,7 +1285,7 @@ export const OrdersHistory = ({ orders = [], onReorder }) => {
 
   return (
     <div className="anim-fade-in p-4 space-y-4 pb-20">
-      <h2 className="text-base font-black text-gray-900 border-b border-gray-100 pb-3">Your Orders</h2>
+      <h2 className="text-base font-black text-gray-900 border-b border-gray-100 pb-3">{t.yourOrders || "Your Orders"}</h2>
 
       {displayOrders.map(order => (
         <div
@@ -1275,22 +1295,22 @@ export const OrdersHistory = ({ orders = [], onReorder }) => {
           <div className="flex justify-between items-start">
             <div>
               <h4 className="font-extrabold text-sm text-gray-900">{order.storeName}</h4>
-              <p className="text-[10px] text-gray-400 mt-0.5">Order ID: #{order.id} • {order.date}</p>
+              <p className="text-[10px] text-gray-400 mt-0.5">{t.orderId || "Order ID"}: #{order.id} • {order.date}</p>
             </div>
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${order.status === 'Delivered' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'
               }`}>
-              {order.status}
+              {order.status === 'Delivered' ? (t.delivered || 'Delivered') : order.status}
             </span>
           </div>
 
           <div className="flex justify-between items-center text-xs pt-1">
-            <span className="font-bold text-gray-700">{order.itemsCount} items • {order.total.toFixed(2)} MAD</span>
+            <span className="font-bold text-gray-700">{order.itemsCount} {t.itemsLabel || "items"} • {order.total.toFixed(2)} MAD</span>
             {order.type === 'Food' && (
               <button
                 onClick={() => onReorder(order.storeName)}
                 className="bg-red-50 hover:bg-red-100 text-red-500 font-bold px-3 py-1 rounded-lg text-[10px]"
               >
-                Reorder
+                {t.reorder || "Reorder"}
               </button>
             )}
           </div>
@@ -1301,10 +1321,18 @@ export const OrdersHistory = ({ orders = [], onReorder }) => {
 };
 
 // Profile Screen Component
-export const ProfileScreen = ({ onLogout, onManageAddresses }) => {
+export const ProfileScreen = ({ 
+  onLogout, 
+  onManageAddresses, 
+  onManagePayments, 
+  onManageNotifications, 
+  onManageLanguage, 
+  activeLanguageName = "English", 
+  t = {} 
+}) => {
   return (
     <div className="anim-fade-in p-4 space-y-5 pb-20">
-      <h2 className="text-base font-black text-gray-900 border-b border-gray-100 pb-3">My Profile</h2>
+      <h2 className="text-base font-black text-gray-900 border-b border-gray-100 pb-3">{t.profile || "My Profile"}</h2>
 
       {/* Profile Header */}
       <div className="bg-gradient-to-r from-red-500 to-red-600 p-5 rounded-3xl text-white flex items-center space-x-4 shadow-md">
@@ -1313,7 +1341,7 @@ export const ProfileScreen = ({ onLogout, onManageAddresses }) => {
         </div>
         <div>
           <h3 className="font-extrabold text-base leading-tight">Ayoub Enejjar</h3>
-          <p className="text-[10px] text-white/80 font-bold mt-0.5">Premium Delo Member</p>
+          <p className="text-[10px] text-white/80 font-bold mt-0.5">{t.premiumMember || "Premium Member"}</p>
         </div>
       </div>
 
@@ -1324,25 +1352,29 @@ export const ProfileScreen = ({ onLogout, onManageAddresses }) => {
             <svg className="w-3.5 h-3.5 text-blue-500 mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
             </svg>
-            Glovo Prime active
+            {t.primeActive || "Glovo Prime active"}
           </h4>
-          <p className="text-[9px] text-blue-600 font-bold mt-0.5">Free delivery on restaurant orders above 100 MAD</p>
+          <p className="text-[9px] text-blue-600 font-bold mt-0.5">{t.primeDesc || "Free delivery on orders above 100 MAD"}</p>
         </div>
-        <span className="text-xs bg-blue-500 text-white font-bold py-1 px-2.5 rounded-lg">Managed</span>
+        <span className="text-xs bg-blue-500 text-white font-bold py-1 px-2.5 rounded-lg">{t.managed || "Managed"}</span>
       </div>
 
       {/* Account Settings */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm divide-y divide-gray-100">
-        <div className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50">
+        <div 
+          onClick={onManagePayments}
+          className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50"
+        >
           <div className="flex items-center space-x-2">
             <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <rect x="2" y="5" width="20" height="14" rx="2" />
               <line x1="2" y1="10" x2="22" y2="10" />
             </svg>
-            <span>Saved Payment Methods</span>
+            <span>{t.savedPayments || "Saved Payment Methods"}</span>
           </div>
           <span className="text-gray-400 text-[10px]">➔</span>
         </div>
+        
         <div
           onClick={onManageAddresses}
           className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50"
@@ -1352,39 +1384,47 @@ export const ProfileScreen = ({ onLogout, onManageAddresses }) => {
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
-            <span>Saved Delivery Addresses</span>
+            <span>{t.savedAddresses || "Saved Delivery Addresses"}</span>
           </div>
           <span className="text-gray-400 text-[10px]">➔</span>
         </div>
-        <div className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50">
+
+        <div 
+          onClick={onManageNotifications}
+          className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50"
+        >
           <div className="flex items-center space-x-2">
             <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9z" />
               <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>
-            <span>Notification Preferences</span>
+            <span>{t.notifPref || "Notification Preferences"}</span>
           </div>
           <span className="text-gray-400 text-[10px]">➔</span>
         </div>
-        <div className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50">
+
+        <div 
+          onClick={onManageLanguage}
+          className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50"
+        >
           <div className="flex items-center space-x-2">
             <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <circle cx="12" cy="12" r="10" />
               <line x1="2" y1="12" x2="22" y2="12" />
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
             </svg>
-            <span>Language Settings</span>
+            <span>{t.langSettings || "Language Settings"}</span>
           </div>
-          <span className="text-gray-300 text-[10px]">English ➔</span>
+          <span className="text-gray-400 text-[10px]">{activeLanguageName} ➔</span>
         </div>
       </div>
 
       {/* logout */}
       <button
         onClick={onLogout}
-        className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-2xl font-bold transition-all text-center text-xs"
+        className="w-full bg-gray-100 hover:bg-gray-250 text-gray-750 py-3 rounded-2xl font-bold transition-all text-center text-xs"
       >
-        Sign Out
+        {t.signOut || "Sign Out"}
       </button>
     </div>
   );
@@ -1657,6 +1697,310 @@ export const LocationModal = ({ currentLocation, onSelectLocation, onClose }) =>
   );
 };
 
+// Payment Methods Management Modal
+export const PaymentMethodsModal = ({ onClose, savedCards = [], onAddCard, onDeleteCard, t = {} }) => {
+  const [cardNumber, setCardNumber] = useState('');
+  const [expiry, setExpiry] = useState('');
+  const [cvv, setCvv] = useState('');
+  const [cardHolder, setCardHolder] = useState('');
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleAdd = (e) => {
+    e.preventDefault();
+    if (!cardNumber || !expiry || !cvv || !cardHolder) {
+      setError(t.fillAllFields || 'Please fill in all card details.');
+      return;
+    }
+    if (cardNumber.replace(/\s/g, '').length < 16) {
+      setError(t.invalidCardNum || 'Invalid card number (must be 16 digits).');
+      return;
+    }
+    onAddCard({
+      id: Date.now(),
+      number: `**** **** **** ${cardNumber.replace(/\s/g, '').slice(-4)}`,
+      expiry,
+      holder: cardHolder,
+      type: cardNumber.startsWith('4') ? 'Visa' : 'Mastercard'
+    });
+    setCardNumber('');
+    setExpiry('');
+    setCvv('');
+    setCardHolder('');
+    setShowAddForm(false);
+    setError('');
+  };
+
+  return (
+    <div className="modal-backdrop" onClick={onClose} style={{ zIndex: 100 }}>
+      <div 
+        className="bg-white w-full max-w-[430px] rounded-t-3xl overflow-hidden anim-slide-up"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="px-4 py-4 flex items-center justify-between border-b border-gray-100">
+          <h2 className="text-base font-black text-gray-900">{t.savedPayments || 'Saved Payment Methods'}</h2>
+          <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-full transition-colors text-gray-400">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
+          {savedCards.length === 0 ? (
+            <div className="text-center py-6 text-gray-500 text-xs">
+              {t.noCards || 'No payment methods saved.'}
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {savedCards.map(card => (
+                <div key={card.id} className="relative bg-gradient-to-br from-gray-805 to-gray-900 p-4 rounded-2xl text-white shadow-md flex flex-col justify-between h-28 overflow-hidden group">
+                  <div className="absolute right-[-10px] top-[-10px] w-24 h-24 bg-white/5 rounded-full blur-xl pointer-events-none"></div>
+                  
+                  <div className="flex justify-between items-start">
+                    <span className="text-[10px] font-black uppercase tracking-wider">{card.type}</span>
+                    <button 
+                      onClick={() => onDeleteCard(card.id)}
+                      className="p-1 text-gray-400 hover:text-red-400 rounded-full hover:bg-white/10 transition-colors"
+                      title={t.deleteCard || 'Delete Card'}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  <div className="text-sm font-bold tracking-widest my-2">{card.number}</div>
+                  
+                  <div className="flex justify-between items-end text-[9px] text-gray-400">
+                    <div>
+                      <div className="uppercase font-bold tracking-wider">{t.cardHolder || 'CARD HOLDER'}</div>
+                      <div className="text-white font-extrabold mt-0.5">{card.holder}</div>
+                    </div>
+                    <div>
+                      <div className="uppercase font-bold tracking-wider">{t.expires || 'EXPIRES'}</div>
+                      <div className="text-white font-extrabold mt-0.5">{card.expiry}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {showAddForm ? (
+            <form onSubmit={handleAdd} className="space-y-3 pt-3 border-t border-gray-100 anim-fade-in">
+              <h3 className="text-xs font-black text-gray-900">{t.addNewCard || 'Add New Card'}</h3>
+              
+              {error && <p className="text-red-500 text-[10px] font-bold">{error}</p>}
+              
+              <div className="space-y-1">
+                <label className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block">{t.cardNumber || 'Card Number'}</label>
+                <input 
+                  type="text" 
+                  maxLength={19}
+                  value={cardNumber}
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/\D/g, '');
+                    const formatted = val.match(/.{1,4}/g)?.join(' ') || val;
+                    setCardNumber(formatted);
+                  }}
+                  placeholder="4000 1234 5678 9010"
+                  className="input-field text-xs"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block">{t.cardHolderName || 'Cardholder Name'}</label>
+                <input 
+                  type="text" 
+                  value={cardHolder}
+                  onChange={(e) => setCardHolder(e.target.value)}
+                  placeholder="Ayoub Enejjar"
+                  className="input-field text-xs"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block">{t.expiryDate || 'Expiry Date'}</label>
+                  <input 
+                    type="text" 
+                    maxLength={5}
+                    placeholder="MM/YY"
+                    value={expiry}
+                    onChange={(e) => {
+                      let val = e.target.value.replace(/\D/g, '');
+                      if (val.length > 2) {
+                        val = `${val.slice(0, 2)}/${val.slice(2, 4)}`;
+                      }
+                      setExpiry(val);
+                    }}
+                    className="input-field text-xs text-center"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block">CVV</label>
+                  <input 
+                    type="password" 
+                    maxLength={3}
+                    placeholder="123"
+                    value={cvv}
+                    onChange={(e) => setCvv(e.target.value.replace(/\D/g, ''))}
+                    className="input-field text-xs text-center"
+                  />
+                </div>
+              </div>
+
+              <div className="flex space-x-2 pt-2">
+                <button 
+                  type="button" 
+                  onClick={() => setShowAddForm(false)}
+                  className="flex-1 border border-gray-200 text-gray-600 py-2.5 rounded-xl font-bold text-xs"
+                >
+                  {t.cancel || 'Cancel'}
+                </button>
+                <button 
+                  type="submit"
+                  className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-xl font-bold text-xs shadow-md"
+                >
+                  {t.save || 'Save'}
+                </button>
+              </div>
+            </form>
+          ) : (
+            <button 
+              onClick={() => setShowAddForm(true)}
+              className="w-full bg-red-50 hover:bg-red-100 text-red-500 py-3 rounded-xl font-bold text-xs transition-all flex items-center justify-center space-x-1.5"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+              </svg>
+              <span>{t.addNewCard || 'Add New Card'}</span>
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Notification Preferences Management Modal
+export const NotificationPreferencesModal = ({ onClose, preferences = {}, onUpdatePreferences, t = {} }) => {
+  const togglePreference = (key) => {
+    onUpdatePreferences({
+      ...preferences,
+      [key]: !preferences[key]
+    });
+  };
+
+  return (
+    <div className="modal-backdrop" onClick={onClose} style={{ zIndex: 100 }}>
+      <div 
+        className="bg-white w-full max-w-[430px] rounded-t-3xl overflow-hidden anim-slide-up"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="px-4 py-4 flex items-center justify-between border-b border-gray-100">
+          <h2 className="text-base font-black text-gray-900">{t.notifPref || 'Notification Preferences'}</h2>
+          <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-full transition-colors text-gray-400">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
+          {[
+            { key: 'push', title: t.pushNotif || 'Push Notifications', desc: t.pushNotifDesc || 'Get updates about your orders and delivery status' },
+            { key: 'email', title: t.emailNotif || 'Email Notifications', desc: t.emailNotifDesc || 'Receive special offers, promos, and receipts via email' },
+            { key: 'sms', title: t.smsNotif || 'SMS Notifications', desc: t.smsNotifDesc || 'Receive quick texts when courier is nearby' },
+            { key: 'offers', title: t.promoNotif || 'Promotional Deals', desc: t.promoNotifDesc || 'Be the first to know about local restaurant promotions' }
+          ].map(item => {
+            const enabled = preferences[item.key] ?? false;
+            return (
+              <div key={item.key} className="flex items-center justify-between py-2.5 border-b border-gray-50 last:border-0">
+                <div className="space-y-0.5 flex-1 pr-4">
+                  <h4 className="text-xs font-bold text-gray-900">{item.title}</h4>
+                  <p className="text-[10px] text-gray-500 leading-relaxed">{item.desc}</p>
+                </div>
+                
+                <button 
+                  onClick={() => togglePreference(item.key)}
+                  className={`w-10 h-6 rounded-full p-0.5 transition-all duration-300 focus:outline-none flex items-center ${
+                    enabled ? 'bg-emerald-500 justify-end' : 'bg-gray-200 justify-start'
+                  }`}
+                  aria-label={`Toggle ${item.title}`}
+                >
+                  <span className="w-5 h-5 rounded-full bg-white shadow-md transform transition-transform duration-300"></span>
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Language Selection Modal
+export const LanguageModal = ({ onClose, currentLang = 'en', onSelectLang, t = {} }) => {
+  const languages = [
+    { code: 'en', name: 'English', localName: 'English', flag: '🇬🇧', dir: 'ltr' },
+    { code: 'fr', name: 'French', localName: 'Français', flag: '🇫🇷', dir: 'ltr' },
+    { code: 'ar', name: 'Arabic', localName: 'العربية', flag: '🇲🇦', dir: 'rtl' }
+  ];
+
+  return (
+    <div className="modal-backdrop" onClick={onClose} style={{ zIndex: 100 }}>
+      <div 
+        className="bg-white w-full max-w-[430px] rounded-t-3xl overflow-hidden anim-slide-up"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="px-4 py-4 flex items-center justify-between border-b border-gray-100">
+          <h2 className="text-base font-black text-gray-900">{t.langSettings || 'Language Settings'}</h2>
+          <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-full transition-colors text-gray-400">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="p-4 space-y-2 max-h-[70vh] overflow-y-auto">
+          {languages.map(lang => {
+            const isSelected = currentLang === lang.code;
+            return (
+              <button
+                key={lang.code}
+                onClick={() => {
+                  onSelectLang(lang.code);
+                  onClose();
+                }}
+                className={`w-full flex items-center justify-between p-3.5 rounded-2xl border text-left transition-all ${
+                  isSelected 
+                    ? 'border-red-500 bg-red-50/55 text-red-600' 
+                    : 'border-gray-100 bg-gray-50/50 hover:bg-gray-100/50 text-gray-700'
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <span className="text-lg">{lang.flag}</span>
+                  <div>
+                    <span className="text-xs font-bold block">{lang.localName}</span>
+                    <span className="text-[9px] text-gray-400 block">{lang.name}</span>
+                  </div>
+                </div>
+                {isSelected && (
+                  <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Components = {
   Header,
   RestaurantInfo,
@@ -1677,7 +2021,10 @@ const Components = {
   OrdersHistory,
   ProfileScreen,
   ComingSoonModal,
-  LocationModal
+  LocationModal,
+  PaymentMethodsModal,
+  NotificationPreferencesModal,
+  LanguageModal
 };
 
 export default Components;

@@ -7,7 +7,7 @@ const {
   SearchBar, MenuItem, DeliveryProgress, CartButton,
   AddToCartModal, BottomNav, CartView, CheckoutModal, OrderConfirmation,
   HomeDashboard, CourierForm, AnythingForm, OrdersHistory, ProfileScreen,
-  ComingSoonModal, LocationModal
+  ComingSoonModal, LocationModal, PaymentMethodsModal, NotificationPreferencesModal, LanguageModal
 } = Components;
 
 export const menuData = {
@@ -85,6 +85,240 @@ export const menuData = {
   ]
 };
 
+const translations = {
+  en: {
+    deliverTo: "Deliver to",
+    home: "Home",
+    orders: "Orders",
+    basket: "Basket",
+    profile: "Profile",
+    yourBasket: "Your Basket",
+    basketEmpty: "Your basket is empty",
+    basketEmptyDesc: "Go back to add delicious meals to your basket!",
+    shopNow: "Shop Now",
+    deliveredFrom: "Delivered from",
+    items: "Items",
+    smallOrderFeeApplied: "Small Order Fee Applied",
+    belowMinDesc1: "Your order subtotal is below the",
+    belowMinDesc2: "minimum.",
+    belowMinDesc3: "Add",
+    belowMinDesc4: "to avoid the extra",
+    belowMinDesc5: "fee.",
+    receiptDetails: "Receipt Details",
+    subtotal: "Products Subtotal",
+    deliveryFee: "Delivery fee",
+    smallOrderFee: "Small order fee",
+    totalToPay: "Total to pay",
+    proceedCheckout: "Proceed to Checkout",
+    checkout: "Checkout",
+    deliveryAddress: "Delivery Address",
+    phoneNumber: "Phone Number",
+    paymentMethod: "Payment Method",
+    cash: "Cash",
+    creditCard: "Credit Card",
+    totalPrice: "Total Price",
+    confirmOrder: "Confirm Order",
+    yourOrders: "Your Orders",
+    orderId: "Order ID",
+    delivered: "Delivered",
+    itemsLabel: "items",
+    reorder: "Reorder",
+    premiumMember: "Premium Member",
+    primeActive: "Glovo Prime active",
+    primeDesc: "Free delivery on orders above 100 MAD",
+    managed: "Managed",
+    savedPayments: "Saved Payment Methods",
+    savedAddresses: "Saved Delivery Addresses",
+    notifPref: "Notification Preferences",
+    langSettings: "Language Settings",
+    signOut: "Sign Out",
+    searchPlaceholder: "Search for restaurants or stores...",
+    whatCanWeBring: "What can we bring you?",
+    food: "Food",
+    courier: "Courier",
+    anything: "Anything",
+    grocery: "Grocery",
+    pharmacy: "Pharmacy",
+    primeDeals: "Prime Deals",
+    popularRestaurants: "Popular Restaurants",
+    seeAll: "See all",
+    noCards: "No payment methods saved.",
+    deleteCard: "Delete Card",
+    cardHolder: "CARD HOLDER",
+    expires: "EXPIRES",
+    addNewCard: "Add New Card",
+    cardNumber: "Card Number",
+    cardHolderName: "Cardholder Name",
+    expiryDate: "Expiry Date",
+    cancel: "Cancel",
+    save: "Save",
+    fillAllFields: "Please fill in all card details.",
+    invalidCardNum: "Invalid card number (must be 16 digits).",
+    pushNotif: "Push Notifications",
+    pushNotifDesc: "Get updates about your orders and delivery status",
+    emailNotif: "Email Notifications",
+    emailNotifDesc: "Receive special offers, promos, and receipts via email",
+    smsNotif: "SMS Notifications",
+    smsNotifDesc: "Receive quick texts when courier is nearby",
+    promoNotif: "Promotional Deals",
+    promoNotifDesc: "Be the first to know about local restaurant promotions"
+  },
+  fr: {
+    deliverTo: "Livrer à",
+    home: "Accueil",
+    orders: "Commandes",
+    basket: "Panier",
+    profile: "Profil",
+    yourBasket: "Votre Panier",
+    basketEmpty: "Votre panier est vide",
+    basketEmptyDesc: "Retournez pour ajouter de délicieux repas à votre panier !",
+    shopNow: "Acheter maintenant",
+    deliveredFrom: "Livré depuis",
+    items: "Articles",
+    smallOrderFeeApplied: "Frais de petite commande appliqués",
+    belowMinDesc1: "Le sous-total de votre commande est inférieur au minimum de",
+    belowMinDesc2: ".",
+    belowMinDesc3: "Ajoutez",
+    belowMinDesc4: "pour éviter les frais supplémentaires de",
+    belowMinDesc5: ".",
+    receiptDetails: "Détails du reçu",
+    subtotal: "Sous-total des produits",
+    deliveryFee: "Frais de livraison",
+    smallOrderFee: "Frais de petite commande",
+    totalToPay: "Total à payer",
+    proceedCheckout: "Passer à la caisse",
+    checkout: "Caisse",
+    deliveryAddress: "Adresse de livraison",
+    phoneNumber: "Numéro de téléphone",
+    paymentMethod: "Mode de paiement",
+    cash: "Espèces",
+    creditCard: "Carte de crédit",
+    totalPrice: "Prix total",
+    confirmOrder: "Confirmer la commande",
+    yourOrders: "Vos Commandes",
+    orderId: "ID de commande",
+    delivered: "Livré",
+    itemsLabel: "articles",
+    reorder: "Recommander",
+    premiumMember: "Membre Premium",
+    primeActive: "Glovo Prime actif",
+    primeDesc: "Livraison gratuite pour les commandes supérieures à 100 MAD",
+    managed: "Géré",
+    savedPayments: "Modes de paiement enregistrés",
+    savedAddresses: "Adresses de livraison enregistrées",
+    notifPref: "Préférences de notification",
+    langSettings: "Paramètres de langue",
+    signOut: "Se déconnecter",
+    searchPlaceholder: "Rechercher des restaurants ou magasins...",
+    whatCanWeBring: "Que pouvons-nous vous apporter ?",
+    food: "Nourriture",
+    courier: "Courrier",
+    anything: "N'importe quoi",
+    grocery: "Supermarché",
+    pharmacy: "Pharmacie",
+    primeDeals: "Offres Prime",
+    popularRestaurants: "Restaurants populaires",
+    seeAll: "Voir tout",
+    noCards: "Aucune carte enregistrée.",
+    deleteCard: "Supprimer la carte",
+    cardHolder: "TITULAIRE DE LA CARTE",
+    expires: "EXPIRE LE",
+    addNewCard: "Ajouter une nouvelle carte",
+    cardNumber: "Numéro de carte",
+    cardHolderName: "Nom du titulaire",
+    expiryDate: "Date d'expiration",
+    cancel: "Annuler",
+    save: "Enregistrer",
+    fillAllFields: "Veuillez remplir tous les détails de la carte.",
+    invalidCardNum: "Numéro de carte invalide (doit comporter 16 chiffres).",
+    pushNotif: "Notifications Push",
+    pushNotifDesc: "Recevez des mises à jour sur vos commandes et le statut de livraison",
+    emailNotif: "Notifications par e-mail",
+    emailNotifDesc: "Recevez des offres spéciales, des promotions et des reçus par e-mail",
+    smsNotif: "Notifications par SMS",
+    smsNotifDesc: "Recevez des SMS rapides lorsque le coursier est proche",
+    promoNotif: "Offres promotionnelles",
+    promoNotifDesc: "Soyez le premier informé des promotions des restaurants locaux"
+  },
+  ar: {
+    deliverTo: "التوصيل إلى",
+    home: "الرئيسية",
+    orders: "طلباتي",
+    basket: "السلة",
+    profile: "حسابي",
+    yourBasket: "سلتك",
+    basketEmpty: "سلتك فارغة",
+    basketEmptyDesc: "عد للخلف لإضافة وجبات لذيذة إلى سلتك!",
+    shopNow: "تسوق الآن",
+    deliveredFrom: "تم التوصيل من",
+    items: "العناصر",
+    smallOrderFeeApplied: "تم تطبيق رسوم الطلب الصغير",
+    belowMinDesc1: "المجموع الفرعي لطلبك أقل من الحد الأدنى البالغ",
+    belowMinDesc2: "درهم.",
+    belowMinDesc3: "أضف",
+    belowMinDesc4: "لتجنب الرسوم الإضافية البالغة",
+    belowMinDesc5: "درهم.",
+    receiptDetails: "تفاصيل الفاتورة",
+    subtotal: "مجموع المنتجات الفرعي",
+    deliveryFee: "رسوم التوصيل",
+    smallOrderFee: "رسوم الطلب الصغير",
+    totalToPay: "المبلغ الإجمالي للدفع",
+    proceedCheckout: "المتابعة لإتمام الطلب",
+    checkout: "الدفع",
+    deliveryAddress: "عنوان التوصيل",
+    phoneNumber: "رقم الهاتف",
+    paymentMethod: "طريقة الدفع",
+    cash: "نقداً",
+    creditCard: "بطاقة الائتمان",
+    totalPrice: "السعر الإجمالي",
+    confirmOrder: "تأكيد الطلب",
+    yourOrders: "طلباتك",
+    orderId: "رقم الطلب",
+    delivered: "تم التوصيل",
+    itemsLabel: "عناصر",
+    reorder: "إعادة الطلب",
+    premiumMember: "عضو بريميوم",
+    primeActive: "غلوفو برايم نشط",
+    primeDesc: "توصيل مجاني للطلبات التي تفوق 100 درهم",
+    managed: "مُدار",
+    savedPayments: "طرق الدفع المحفوظة",
+    savedAddresses: "عناوين التوصيل المحفوظة",
+    notifPref: "تفضيلات الإشعارات",
+    langSettings: "إعدادات اللغة",
+    signOut: "تسجيل الخروج",
+    searchPlaceholder: "البحث عن مطاعم أو متاجر...",
+    whatCanWeBring: "ماذا يمكننا أن نجلب لك؟",
+    food: "طعام",
+    courier: "رسول توصيل",
+    anything: "أي شيء",
+    grocery: "بقالة",
+    pharmacy: "صيدلية",
+    primeDeals: "عروض برايم",
+    popularRestaurants: "المطاعم الشعبية",
+    seeAll: "عرض الكل",
+    noCards: "لا توجد طرق دفع محفوظة.",
+    deleteCard: "حذف البطاقة",
+    cardHolder: "صاحب البطاقة",
+    expires: "تاريخ الانتهاء",
+    addNewCard: "إضافة بطاقة جديدة",
+    cardNumber: "رقم البطاقة",
+    cardHolderName: "اسم صاحب البطاقة",
+    expiryDate: "تاريخ الانتهاء",
+    cancel: "إلغاء",
+    save: "حفظ",
+    fillAllFields: "يرجى ملء جميع تفاصيل البطاقة.",
+    invalidCardNum: "رقم بطاقة غير صالح (يجب أن يتكون من 16 رقمًا).",
+    pushNotif: "إشعارات الهاتف",
+    pushNotifDesc: "احصل على تحديثات حول طلباتك وحالة التوصيل",
+    emailNotif: "إشعارات البريد الإلكتروني",
+    emailNotifDesc: "تلقي العروض الخاصة والرموز الترويجية والإيصالات عبر البريد الإلكتروني",
+    smsNotif: "إشعارات SMS",
+    smsNotifDesc: "تلقي رسائل نصية سريعة عندما يكون Courier قريباً",
+    promoNotif: "العروض الترويجية",
+    promoNotifDesc: "كن أول من يعلم عن العروض الترويجية للمطاعم المحلية"
+  }
+};
+
 function App() {
   const [currentView, setCurrentView] = useState('home');
   const [activeNav, setActiveNav] = useState('home');
@@ -118,6 +352,43 @@ function App() {
   });
   const [showLocationModal, setShowLocationModal] = useState(false);
 
+  // Theme State
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('glovo_theme') || 'light';
+  });
+
+  // Language State
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem('glovo_language') || 'en';
+  });
+
+  // Payment Cards State
+  const [savedCards, setSavedCards] = useState(() => {
+    const localCards = localStorage.getItem('glovo_saved_cards');
+    return localCards ? JSON.parse(localCards) : [
+      { id: '1', number: '**** **** **** 4321', expiry: '12/28', holder: 'AYOUB ENEJJAR', type: 'Visa' }
+    ];
+  });
+
+  // Notification Preferences State
+  const [notifPrefs, setNotifPrefs] = useState(() => {
+    const localPrefs = localStorage.getItem('glovo_notif_prefs');
+    return localPrefs ? JSON.parse(localPrefs) : {
+      push: true,
+      email: true,
+      sms: false,
+      offers: true
+    };
+  });
+
+  // Modal Visibility States
+  const [showPaymentsModal, setShowPaymentsModal] = useState(false);
+  const [showNotificationsModal, setShowNotificationsModal] = useState(false);
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
+
+  // Get active translation dictionary
+  const t = translations[language] || translations['en'];
+
   // Sync state with localStorage
   useEffect(() => {
     localStorage.setItem('glovo_cart', JSON.stringify(cart));
@@ -135,6 +406,40 @@ function App() {
     localStorage.setItem('glovo_user_location', location);
   }, [location]);
 
+  // Sync Theme with DOM
+  useEffect(() => {
+    localStorage.setItem('glovo_theme', theme);
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark-theme');
+    } else {
+      root.classList.remove('dark-theme');
+    }
+  }, [theme]);
+
+  // Sync Language with DOM & Dir
+  useEffect(() => {
+    localStorage.setItem('glovo_language', language);
+    const root = document.documentElement;
+    if (language === 'ar') {
+      root.dir = 'rtl';
+      root.lang = 'ar';
+    } else {
+      root.dir = 'ltr';
+      root.lang = language;
+    }
+  }, [language]);
+
+  // Sync Saved Cards
+  useEffect(() => {
+    localStorage.setItem('glovo_saved_cards', JSON.stringify(savedCards));
+  }, [savedCards]);
+
+  // Sync Notif Prefs
+  useEffect(() => {
+    localStorage.setItem('glovo_notif_prefs', JSON.stringify(notifPrefs));
+  }, [notifPrefs]);
+
   const cartTotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
   const cartCount = cart.reduce((s, i) => s + i.quantity, 0);
 
@@ -146,7 +451,6 @@ function App() {
   });
 
   const handleSelectRestaurant = (restaurant) => {
-    // If selecting a different restaurant, check if cart has items
     if (cart.length > 0 && cart[0].restaurantId && cart[0].restaurantId !== restaurant.id) {
       if (window.confirm("You have items from another restaurant in your basket. Clear your basket to proceed?")) {
         setCart([]);
@@ -253,6 +557,8 @@ function App() {
       setCart([]);
       setOrdersHistory([]);
       localStorage.clear();
+      setLanguage('en');
+      setTheme('light');
       setCurrentView('home');
       setActiveNav('home');
     }
@@ -276,6 +582,7 @@ function App() {
             onSupermarketClick={() => setComingSoonCategory('Grocery')}
             onPharmacyClick={() => setComingSoonCategory('Pharmacy')}
             onSearchStore={(val) => {}}
+            t={t}
           />
         );
       case 'courier':
@@ -283,9 +590,19 @@ function App() {
       case 'anything':
         return <AnythingForm onSubmit={handleAnythingOrder} onBack={goHome} />;
       case 'orders':
-        return <OrdersHistory orders={ordersHistory} onReorder={handleReorder} />;
+        return <OrdersHistory orders={ordersHistory} onReorder={handleReorder} t={t} />;
       case 'profile':
-        return <ProfileScreen onLogout={handleLogout} onManageAddresses={() => setShowLocationModal(true)} />;
+        return (
+          <ProfileScreen 
+            onLogout={handleLogout} 
+            onManageAddresses={() => setShowLocationModal(true)} 
+            onManagePayments={() => setShowPaymentsModal(true)}
+            onManageNotifications={() => setShowNotificationsModal(true)}
+            onManageLanguage={() => setShowLanguageModal(true)}
+            activeLanguageName={language === 'en' ? 'English' : language === 'fr' ? 'Français' : 'العربية'}
+            t={t}
+          />
+        );
       case 'restaurant':
         return (
           <div style={{ overflowY: 'auto', paddingBottom: 140 }}>
@@ -343,7 +660,6 @@ function App() {
         restaurant={selectedRestaurant}
         onUpdateQty={updateQty}
         onBack={() => {
-          // If we came from a restaurant, go back there, otherwise home
           if (cart.length > 0) {
             const lastRest = menuData.restaurants.find(r => r.id === cart[0].restaurantId);
             if (lastRest) {
@@ -359,6 +675,7 @@ function App() {
         onConfirmOrder={confirmOrder}
         onCloseCheckout={() => setShowCheckout(false)}
         defaultAddress={location}
+        t={t}
       />
     );
   }
@@ -373,9 +690,12 @@ function App() {
             onBack={currentView === 'restaurant' ? goHome : null} 
             onSearchToggle={currentView === 'restaurant' ? () => setShowSearch(p => !p) : null} 
             showSearch={showSearch} 
-            title={currentView === 'restaurant' ? "Store Menu" : "Deliver to"}
+            title={currentView === 'restaurant' ? "Store Menu" : t.deliverTo || "Deliver to"}
             location={location}
             onLocationClick={() => setShowLocationModal(true)}
+            theme={theme}
+            onThemeToggle={() => setTheme(p => p === 'light' ? 'dark' : 'light')}
+            t={t}
           />
         )}
 
@@ -401,7 +721,7 @@ function App() {
         )}
 
         {/* Bottom Nav Bar */}
-        <BottomNav active={activeNav} onChange={handleNavChange} cartCount={cartCount} />
+        <BottomNav active={activeNav} onChange={handleNavChange} cartCount={cartCount} t={t} />
 
         {/* Coming Soon Popups */}
         {comingSoonCategory && (
@@ -414,6 +734,37 @@ function App() {
             currentLocation={location}
             onSelectLocation={setLocation}
             onClose={() => setShowLocationModal(false)}
+          />
+        )}
+
+        {/* Payment Methods Modal */}
+        {showPaymentsModal && (
+          <PaymentMethodsModal
+            savedCards={savedCards}
+            onAddCard={(card) => setSavedCards(prev => [...prev, card])}
+            onDeleteCard={(cardId) => setSavedCards(prev => prev.filter(c => c.id !== cardId))}
+            onClose={() => setShowPaymentsModal(false)}
+            t={t}
+          />
+        )}
+
+        {/* Notification Preferences Modal */}
+        {showNotificationsModal && (
+          <NotificationPreferencesModal
+            preferences={notifPrefs}
+            onUpdatePreferences={setNotifPrefs}
+            onClose={() => setShowNotificationsModal(false)}
+            t={t}
+          />
+        )}
+
+        {/* Language Selection Modal */}
+        {showLanguageModal && (
+          <LanguageModal
+            currentLang={language}
+            onSelectLang={setLanguage}
+            onClose={() => setShowLanguageModal(false)}
+            t={t}
           />
         )}
       </div>
