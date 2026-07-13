@@ -1440,12 +1440,13 @@ export const LocationModal = ({ currentLocation, onSelectLocation, onClose }) =>
 
   const popularNeighborhoods = [
     'Maarif, Casablanca',
-    'Gauthier, Casablanca',
-    'Bourgogne, Casablanca',
+    'Agdal, Rabat',
+    'Gueliz, Marrakech',
+    'Malabata, Tangier',
+    'Ville Nouvelle, Fez',
     'Anfa, Casablanca',
-    'Ain Diab, Casablanca',
-    'Oasis, Casablanca',
-    'Sidi Maarouf, Casablanca'
+    'Hay Riad, Rabat',
+    'Hivernage, Marrakech'
   ];
 
   const handleGetCurrentLocation = () => {
@@ -1460,26 +1461,73 @@ export const LocationModal = ({ currentLocation, onSelectLocation, onClose }) =>
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        setTimeout(() => {
-          let mockAddress = 'Maarif, Casablanca';
-          if (latitude && longitude) {
-            mockAddress = `Gauthier, Casablanca (Near Lat ${latitude.toFixed(3)})`;
+
+        // Fetch real reverse geocoded address from Nominatim API (OpenStreetMap)
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`, {
+          headers: {
+            'Accept-Language': 'fr, ar, en',
+            'User-Agent': 'GlovoMoroccoApp/1.0'
           }
-          onSelectLocation(mockAddress);
+        })
+        .then(res => {
+          if (!res.ok) throw new Error('Failed to fetch address details');
+          return res.json();
+        })
+        .then(data => {
+          if (data && data.address) {
+            const addr = data.address;
+            const road = addr.road || addr.pedestrian || addr.suburb || '';
+            const neighborhood = addr.neighbourhood || addr.quarter || addr.suburb || '';
+            const city = addr.city || addr.town || addr.village || addr.county || '';
+            
+            let displayAddress = '';
+            if (road) displayAddress += road;
+            if (neighborhood && neighborhood !== road) {
+              displayAddress += (displayAddress ? ', ' : '') + neighborhood;
+            }
+            if (city) {
+              displayAddress += (displayAddress ? ', ' : '') + city;
+            }
+
+            if (!displayAddress.trim()) {
+              displayAddress = data.display_name.split(',').slice(0, 3).join(',').trim();
+            }
+
+            onSelectLocation(displayAddress);
+          } else {
+            onSelectLocation(`GPS (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`);
+          }
           setIsLocating(false);
           onClose();
-        }, 1500);
+        })
+        .catch(err => {
+          console.error(err);
+          // Reliable regional fallback for Morocco
+          setTimeout(() => {
+            let resolvedAddr = 'Maarif, Casablanca';
+            if (latitude >= 33 && latitude <= 34 && longitude >= -8 && longitude <= -7) {
+              resolvedAddr = 'Agdal, Rabat (GPS Fallback)';
+            } else if (latitude >= 31 && latitude <= 32 && longitude >= -9 && longitude <= -7.5) {
+              resolvedAddr = 'Gueliz, Marrakech (GPS Fallback)';
+            } else {
+              resolvedAddr = `Morocco (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`;
+            }
+            onSelectLocation(resolvedAddr);
+            setIsLocating(false);
+            onClose();
+          }, 1000);
+        });
       },
       (error) => {
         console.error(error);
         setTimeout(() => {
           const randomFav = popularNeighborhoods[Math.floor(Math.random() * popularNeighborhoods.length)];
-          onSelectLocation(randomFav + ' (Simulated GPS)');
+          onSelectLocation(randomFav + ' (GPS Simulated)');
           setIsLocating(false);
           onClose();
-        }, 1500);
+        }, 1200);
       },
-      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
     );
   };
 
