@@ -121,22 +121,19 @@ body {
    CARD INTERACTIONS
 ══════════════════════════════════════════ */
 .card-lift {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: box-shadow 0.25s ease;
   cursor: pointer;
 }
-.card-lift:hover  { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-.card-lift:active { transform: translateY(-1px) scale(0.985); }
+.card-lift:hover  { box-shadow: var(--shadow-md); }
+.card-lift:active { opacity: 0.92; }
 
 /* ══════════════════════════════════════════
    BUTTON SPRING
 ══════════════════════════════════════════ */
 .btn-spring {
-  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow  0.18s ease,
-              background  0.18s ease;
+  transition: background 0.18s ease, box-shadow 0.18s ease;
 }
-.btn-spring:hover  { transform: scale(1.06); }
-.btn-spring:active { transform: scale(0.93); }
+.btn-spring:active { opacity: 0.85; }
 
 /* ══════════════════════════════════════════
    SHIMMER SKELETON
@@ -258,11 +255,10 @@ body {
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: opacity 0.2s ease;
   user-select: none;
 }
-.offer-card:hover  { transform: translateY(-2px) scale(1.02); box-shadow: var(--shadow-lg); }
-.offer-card:active { transform: scale(0.97); }
+.offer-card:active { opacity: 0.85; }
 .offer-card::before {
   content: '';
   position: absolute;
@@ -288,10 +284,8 @@ body {
   border-radius: 18px;
   border: 1px solid var(--border);
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
 }
-.menu-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
 /* ══════════════════════════════════════════
    FLOATING CART BUTTON
@@ -300,12 +294,11 @@ body {
   background: var(--primary);
   border-radius: 18px;
   box-shadow: var(--shadow-colored);
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  transition: opacity 0.2s ease;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.cart-float-btn:hover  { transform: translateY(-3px) scale(1.03); box-shadow: 0 16px 40px rgba(230,57,70,0.42); }
-.cart-float-btn:active { transform: scale(0.97); }
+.cart-float-btn:active { opacity: 0.88; }
 
 /* ══════════════════════════════════════════
    BADGE

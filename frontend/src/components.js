@@ -893,10 +893,10 @@ export const HomeDashboard = ({
           {/* Food Bubble */}
           <button
             onClick={() => onSelectRestaurant(restaurants[0])} // Default to McDonald's or show category
-            className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
+            className="flex flex-col items-center space-y-1.5 focus:outline-none active:opacity-75 transition-opacity"
           >
-            <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center shadow-sm border border-orange-150 group-hover:scale-105 group-hover:shadow-md transition-all duration-300">
-              <svg className="w-10 h-10 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center shadow-sm border border-orange-150">
+              <svg className="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 44C12 30 18 18 32 18C46 18 52 30 52 44H12Z" fill="url(#food-grad-1)" />
                 <rect x="8" y="44" width="48" height="6" rx="3" fill="#FFB74D" />
                 <rect x="14" y="50" width="36" height="4" rx="2" fill="#FFA726" />
@@ -916,10 +916,10 @@ export const HomeDashboard = ({
           {/* Courier Bubble */}
           <button
             onClick={onCourierClick}
-            className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
+            className="flex flex-col items-center space-y-1.5 focus:outline-none active:opacity-75 transition-opacity"
           >
-            <div className="w-16 h-16 rounded-full bg-purple-50 flex items-center justify-center shadow-sm border border-purple-150 group-hover:scale-105 group-hover:shadow-md transition-all duration-300">
-              <svg className="w-10 h-10 transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="w-16 h-16 rounded-full bg-purple-50 flex items-center justify-center shadow-sm border border-purple-150">
+              <svg className="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M32 6L54 16L32 26L10 16L32 6Z" fill="#CE93D8" />
                 <path d="M10 16V42L32 52V26L10 16Z" fill="#ab47bc" />
                 <path d="M54 16V42L32 52V26L54 16Z" fill="#ba68c8" />
@@ -934,10 +934,10 @@ export const HomeDashboard = ({
           {/* Anything Bubble */}
           <button
             onClick={onAnythingClick}
-            className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
+            className="flex flex-col items-center space-y-1.5 focus:outline-none active:opacity-75 transition-opacity"
           >
-            <div className="w-16 h-16 rounded-full bg-pink-50 flex items-center justify-center shadow-sm border border-pink-150 group-hover:scale-105 group-hover:shadow-md transition-all duration-300">
-              <svg className="w-10 h-10 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="w-16 h-16 rounded-full bg-pink-50 flex items-center justify-center shadow-sm border border-pink-150">
+              <svg className="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="14" y="24" width="36" height="28" rx="4" fill="url(#any-grad-1)" />
                 <rect x="11" y="18" width="42" height="8" rx="2" fill="#7986CB" />
                 <rect x="30" y="18" width="4" height="34" fill="#FF4081" />
@@ -959,10 +959,10 @@ export const HomeDashboard = ({
           {/* Supermarket Bubble */}
           <button
             onClick={onSupermarketClick}
-            className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
+            className="flex flex-col items-center space-y-1.5 focus:outline-none active:opacity-75 transition-opacity"
           >
-            <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center shadow-sm border border-emerald-150 group-hover:scale-105 group-hover:shadow-md transition-all duration-300">
-              <svg className="w-10 h-10 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center shadow-sm border border-emerald-150">
+              <svg className="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M18 20H46L43 54H21L18 20Z" fill="url(#groc-grad-1)" />
                 <path d="M18 20L21 26H43L46 20H18Z" fill="#A1887F" />
                 <path d="M26 20V15C26 12.8 27.8 11 30 11H34C36.2 11 38 12.8 38 15V20" stroke="#8D6E63" strokeWidth="3" strokeLinecap="round" />
@@ -983,10 +983,10 @@ export const HomeDashboard = ({
           {/* Pharmacy Bubble */}
           <button
             onClick={onPharmacyClick}
-            className="flex flex-col items-center space-y-1.5 focus:outline-none group active:scale-95 transition-transform"
+            className="flex flex-col items-center space-y-1.5 focus:outline-none active:opacity-75 transition-opacity"
           >
-            <div className="w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center shadow-sm border border-teal-155 group-hover:scale-105 group-hover:shadow-md transition-all duration-300">
-              <svg className="w-10 h-10 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center shadow-sm border border-teal-155">
+              <svg className="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="32" cy="32" r="28" fill="#E0F2F1" />
                 <path d="M32 16V48" stroke="#00B0FF" strokeWidth="8" strokeLinecap="round" />
                 <path d="M16 32H48" stroke="#00B0FF" strokeWidth="8" strokeLinecap="round" />
@@ -1001,10 +1001,10 @@ export const HomeDashboard = ({
 
           {/* Prime Bubble */}
           <div
-            className="flex flex-col items-center space-y-1.5 focus:outline-none group opacity-85 cursor-not-allowed"
+            className="flex flex-col items-center space-y-1.5 opacity-85 cursor-not-allowed"
           >
             <div className="w-16 h-16 rounded-full bg-sky-50 flex items-center justify-center shadow-sm border border-sky-150">
-              <svg className="w-10 h-10 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="32" cy="32" r="28" fill="#E3F2FD" />
                 <path d="M36 8L20 34H32L28 56L44 30H32L36 8Z" fill="url(#prime-grad-1)" />
                 <defs>
@@ -1032,7 +1032,7 @@ export const HomeDashboard = ({
             <div
               key={store.name}
               onClick={() => onSelectRestaurant(store)}
-              className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex"
+              className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm cursor-pointer flex active:opacity-80 transition-opacity"
             >
               <div className="w-24 h-24 relative flex-shrink-0 bg-gray-100">
                 <img src={store.coverImage} alt={store.name} className="w-full h-full object-cover" />
