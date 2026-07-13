@@ -7,7 +7,7 @@ const {
   SearchBar, MenuItem, DeliveryProgress, CartButton,
   AddToCartModal, BottomNav, CartView, CheckoutModal, OrderConfirmation,
   HomeDashboard, CourierForm, AnythingForm, OrdersHistory, ProfileScreen,
-  ComingSoonModal
+  ComingSoonModal, LocationModal
 } = Components;
 
 export const menuData = {
@@ -111,6 +111,12 @@ function App() {
   const [orderStep, setOrderStep] = useState(0);
   const [showSearch, setShowSearch] = useState(false);
   const [comingSoonCategory, setComingSoonCategory] = useState('');
+  
+  // Location State
+  const [location, setLocation] = useState(() => {
+    return localStorage.getItem('glovo_user_location') || 'Maarif, Casablanca';
+  });
+  const [showLocationModal, setShowLocationModal] = useState(false);
 
   // Sync state with localStorage
   useEffect(() => {
@@ -124,6 +130,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem('glovo_orders_history', JSON.stringify(ordersHistory));
   }, [ordersHistory]);
+
+  useEffect(() => {
+    localStorage.setItem('glovo_user_location', location);
+  }, [location]);
 
   const cartTotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
   const cartCount = cart.reduce((s, i) => s + i.quantity, 0);
@@ -275,7 +285,7 @@ function App() {
       case 'orders':
         return <OrdersHistory orders={ordersHistory} onReorder={handleReorder} />;
       case 'profile':
-        return <ProfileScreen onLogout={handleLogout} />;
+        return <ProfileScreen onLogout={handleLogout} onManageAddresses={() => setShowLocationModal(true)} />;
       case 'restaurant':
         return (
           <div style={{ overflowY: 'auto', paddingBottom: 140 }}>
@@ -348,6 +358,7 @@ function App() {
         showCheckout={showCheckout}
         onConfirmOrder={confirmOrder}
         onCloseCheckout={() => setShowCheckout(false)}
+        defaultAddress={location}
       />
     );
   }
@@ -363,6 +374,8 @@ function App() {
             onSearchToggle={currentView === 'restaurant' ? () => setShowSearch(p => !p) : null} 
             showSearch={showSearch} 
             title={currentView === 'restaurant' ? "Store Menu" : "Deliver to"}
+            location={location}
+            onLocationClick={() => setShowLocationModal(true)}
           />
         )}
 
@@ -393,6 +406,15 @@ function App() {
         {/* Coming Soon Popups */}
         {comingSoonCategory && (
           <ComingSoonModal category={comingSoonCategory} onClose={() => setComingSoonCategory('')} />
+        )}
+
+        {/* Location Selection Modal */}
+        {showLocationModal && (
+          <LocationModal 
+            currentLocation={location}
+            onSelectLocation={setLocation}
+            onClose={() => setShowLocationModal(false)}
+          />
         )}
       </div>
     </div>

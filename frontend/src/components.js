@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Header Component
-export const Header = ({ onBack, onSearchToggle, showSearch, title = "Deliver to" }) => {
+export const Header = ({ onBack, onSearchToggle, showSearch, title = "Deliver to", location = "Maarif, Casablanca", onLocationClick }) => {
   return (
     <div className="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-100 sticky top-0 z-40">
       <div className="flex items-center space-x-3">
@@ -12,13 +12,18 @@ export const Header = ({ onBack, onSearchToggle, showSearch, title = "Deliver to
             </svg>
           </button>
         )}
-        <div>
+        <div 
+          onClick={onLocationClick} 
+          className={`flex flex-col ${onLocationClick ? 'cursor-pointer select-none hover:opacity-80 transition-opacity' : ''}`}
+        >
           <span className="text-[10px] text-gray-400 block font-bold uppercase tracking-wider">{title}</span>
           <span className="text-xs font-bold text-gray-800 flex items-center">
-            Maarif, Casablanca
-            <svg className="w-3.5 h-3.5 ml-0.5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg>
+            {location}
+            {onLocationClick && (
+              <svg className="w-3.5 h-3.5 ml-0.5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            )}
           </span>
         </div>
       </div>
@@ -449,8 +454,8 @@ export const BottomNav = ({ active, onChange, cartCount }) => {
 };
 
 // Checkout Modal Component
-export const CheckoutModal = ({ onClose, total, currency, onConfirm }) => {
-  const [address, setAddress] = useState('Maarif, 20100 Casablanca');
+export const CheckoutModal = ({ onClose, total, currency, onConfirm, defaultAddress }) => {
+  const [address, setAddress] = useState(defaultAddress || 'Maarif, Casablanca');
   const [payment, setPayment] = useState('Cash');
   const [phone, setPhone] = useState('+212 612 345678');
 
@@ -549,7 +554,8 @@ export const CheckoutModal = ({ onClose, total, currency, onConfirm }) => {
 // Cart View Component
 export const CartView = ({ 
   cart, total, count, restaurant, onUpdateQty, onBack, 
-  onCheckout, showCheckout, onConfirmOrder, onCloseCheckout 
+  onCheckout, showCheckout, onConfirmOrder, onCloseCheckout,
+  defaultAddress
 }) => {
   const deliveryFee = restaurant.deliveryFee;
   const isBelowMin = total < restaurant.minOrder;
@@ -702,6 +708,7 @@ export const CartView = ({
             total={grandTotal} 
             currency={restaurant.currency} 
             onConfirm={onConfirmOrder} 
+            defaultAddress={defaultAddress}
           />
         )}
       </div>
@@ -1301,7 +1308,7 @@ export const OrdersHistory = ({ orders = [], onReorder }) => {
 };
 
 // Profile Screen Component
-export const ProfileScreen = ({ onLogout }) => {
+export const ProfileScreen = ({ onLogout, onManageAddresses }) => {
   return (
     <div className="anim-fade-in p-4 space-y-5 pb-20">
       <h2 className="text-base font-black text-gray-900 border-b border-gray-100 pb-3">My Profile</h2>
@@ -1343,7 +1350,10 @@ export const ProfileScreen = ({ onLogout }) => {
           </div>
           <span className="text-gray-400 text-[10px]">➔</span>
         </div>
-        <div className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50">
+        <div 
+          onClick={onManageAddresses}
+          className="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 cursor-pointer hover:bg-gray-50/50"
+        >
           <div className="flex items-center space-x-2">
             <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
@@ -1422,6 +1432,192 @@ export const ComingSoonModal = ({ category, onClose }) => {
   );
 };
 
+// Location Selection Modal Component
+export const LocationModal = ({ currentLocation, onSelectLocation, onClose }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isLocating, setIsLocating] = useState(false);
+  const [locationError, setLocationError] = useState('');
+
+  const popularNeighborhoods = [
+    'Maarif, Casablanca',
+    'Gauthier, Casablanca',
+    'Bourgogne, Casablanca',
+    'Anfa, Casablanca',
+    'Ain Diab, Casablanca',
+    'Oasis, Casablanca',
+    'Sidi Maarouf, Casablanca'
+  ];
+
+  const handleGetCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationError('Geolocation is not supported by your browser.');
+      return;
+    }
+
+    setIsLocating(true);
+    setLocationError('');
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setTimeout(() => {
+          let mockAddress = 'Maarif, Casablanca';
+          if (latitude && longitude) {
+            mockAddress = `Gauthier, Casablanca (Near Lat ${latitude.toFixed(3)})`;
+          }
+          onSelectLocation(mockAddress);
+          setIsLocating(false);
+          onClose();
+        }, 1500);
+      },
+      (error) => {
+        console.error(error);
+        setTimeout(() => {
+          const randomFav = popularNeighborhoods[Math.floor(Math.random() * popularNeighborhoods.length)];
+          onSelectLocation(randomFav + ' (Simulated GPS)');
+          setIsLocating(false);
+          onClose();
+        }, 1500);
+      },
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+    );
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      onSelectLocation(searchQuery.trim());
+      onClose();
+    }
+  };
+
+  const filteredNeighborhoods = popularNeighborhoods.filter(n =>
+    n.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div className="modal-backdrop" onClick={onClose} style={{ zIndex: 150 }}>
+      <div 
+        className="bg-white w-full max-w-[430px] rounded-t-3xl overflow-hidden anim-slide-up"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="p-5 space-y-4 max-h-[85vh] overflow-y-auto">
+          {/* Header */}
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-black text-gray-900">Select Delivery Location</h2>
+              <p className="text-[10px] text-gray-400 font-bold mt-0.5">Currently: {currentLocation}</p>
+            </div>
+            <button onClick={onClose} className="p-1.5 hover:bg-gray-105 rounded-full transition-colors">
+              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Search Form */}
+          <form onSubmit={handleSearchSubmit} className="search-bar">
+            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input 
+              type="text" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Enter street, neighborhood, or city..."
+              className="w-full bg-transparent outline-none text-xs font-semibold"
+            />
+            {searchQuery && (
+              <button 
+                type="button" 
+                onClick={() => setSearchQuery('')}
+                className="p-0.5 hover:bg-gray-100 rounded-full"
+              >
+                <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </form>
+
+          {/* GPS Locator Button */}
+          <button
+            onClick={handleGetCurrentLocation}
+            disabled={isLocating}
+            className={`w-full flex items-center justify-between p-3.5 rounded-2xl border transition-all ${
+              isLocating
+                ? 'bg-red-50/50 border-red-200 text-red-600'
+                : 'bg-red-50 hover:bg-red-100/70 border-red-100 text-red-500'
+            }`}
+          >
+            <div className="flex items-center space-x-2.5">
+              {isLocating ? (
+                <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              )}
+              <span className="text-xs font-black">
+                {isLocating ? 'Determining your location...' : 'Use current location'}
+              </span>
+            </div>
+            {!isLocating && <span className="text-[10px] font-bold bg-white/60 px-2 py-0.5 rounded-md border border-red-100">GPS</span>}
+          </button>
+
+          {locationError && (
+            <div className="text-[10px] text-red-500 font-bold bg-red-50/50 p-2.5 rounded-xl border border-red-100">
+              {locationError}
+            </div>
+          )}
+
+          {/* Popular Neighborhoods List */}
+          <div className="space-y-2.5 pt-1">
+            <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Popular Neighborhoods</h3>
+            <div className="space-y-1.5">
+              {filteredNeighborhoods.map(neighborhood => {
+                const isSelected = currentLocation === neighborhood;
+                return (
+                  <button
+                    key={neighborhood}
+                    type="button"
+                    onClick={() => {
+                      onSelectLocation(neighborhood);
+                      onClose();
+                    }}
+                    className={`w-full flex items-center space-x-3 p-3 rounded-xl border text-left transition-all ${
+                      isSelected
+                        ? 'border-emerald-500 bg-emerald-50/30 text-emerald-800'
+                        : 'border-gray-150 bg-gray-50/50 hover:bg-gray-100/50 text-gray-700'
+                    }`}
+                  >
+                    <svg className={`w-4 h-4 ${isSelected ? 'text-emerald-500' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    </svg>
+                    <div className="flex-1">
+                      <p className="text-xs font-bold leading-tight">{neighborhood}</p>
+                    </div>
+                    {isSelected && (
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    )}
+                  </button>
+                );
+              })}
+              {filteredNeighborhoods.length === 0 && (
+                <p className="text-xs text-gray-400 font-semibold text-center py-4">No matching neighborhoods found</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Components = {
   Header,
   RestaurantInfo,
@@ -1441,7 +1637,8 @@ const Components = {
   AnythingForm,
   OrdersHistory,
   ProfileScreen,
-  ComingSoonModal
+  ComingSoonModal,
+  LocationModal
 };
 
 export default Components;
