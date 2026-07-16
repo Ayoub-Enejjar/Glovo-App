@@ -59,8 +59,8 @@ export const menuData = {
       items: [
         { id: 21, name: "Margherita Pizza Medium", description: "Classic tomato sauce base topped with premium mozzarella cheese and fresh basil", price: 65.00, image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&q=80", ordersCount: "12k+", category: "Pizzas", isPopular: true, calories: 920 },
         { id: 22, name: "Pepperoni Lover's Pizza Medium", description: "Loads of beef pepperoni, cheese, and pizza sauce", price: 85.00, image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&q=80", ordersCount: "10k+", category: "Pizzas", isPopular: true, calories: 1150 },
-        { id: 23, name: "Garlic Bread with Cheese", description: "4 pieces of toasted baguette topped with garlic butter and melted mozzarella", price: 25.00, image: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=400&q=80", ordersCount: "9k+", category: "Sides", isPopular: true, calories: 410 },
-        { id: 24, name: "Pepsi Medium", description: "Crisp and cold Pepsi, the perfect pizza companion", price: 18.00, image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&q=80", ordersCount: "15k+", category: "Drinks", isPopular: false, calories: 180 }
+        { id: 23, name: "Garlic Bread with Cheese", description: "4 pieces of toasted baguette topped with garlic butter and melted mozzarella", price: 25.00, image: "https://tse3.mm.bing.net/th/id/OIP.nrqJM7R5jq34R44d69Q69wHaLG?r=0&rs=1&pid=ImgDetMain&o=7&rm=3", ordersCount: "9k+", category: "Sides", isPopular: true, calories: 410 },
+        { id: 24, name: "Pepsi Medium", description: "Crisp and cold Pepsi, the perfect pizza companion", price: 18.00, image: "https://tse1.mm.bing.net/th/id/OIP.8da86JgVkKWl_LIKwbQ7KQHaEK?r=0&w=1200&h=675&rs=1&pid=ImgDetMain&o=7&rm=3", ordersCount: "15k+", category: "Drinks", isPopular: false, calories: 180 }
       ]
     },
     {
